@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarsAds - Find Your Perfect Car</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <nav class="nav">
+        <div class="logo">
+          <a href="index.html" class="logo-link">
+            <img src="images/logo.png" alt="CarsAds Logo" class="logo-img" />
+            <span class="logo">CarsAds</span>
+          </a>
+        </div>
+        <ul class="nav-links">
+          <li><a href="index.html" onclick="showSection('home')">Home</a></li>
+          <li><a href="buy.html" onclick="showSection('buy')">Buy</a></li>
+          <li><a href="sell.html" onclick="showSection('sell')">Sell</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <!-- Home Section -->
+      <section id="home-section">
+        <div class="hero">
+          <div class="hero-content">
+            <h1>Find Your Perfect Car</h1>
+            <p>
+              Australia's premier destination for buying and selling quality
+              vehicles
+            </p>
+
+            <div class="search-container-home">
+              <form class="search-form" onsubmit="performSearch(event)">
+                <div class="form-group">
+                  <label for="make">Make</label>
+                  <select id="make" name="make">
+                    <option value="">All Makes</option>
+                    <option value="toyota">Toyota</option>
+                    <option value="holden">Holden</option>
+                    <option value="ford">Ford</option>
+                    <option value="mazda">Mazda</option>
+                    <option value="nissan">Nissan</option>
+                    <option value="honda">Honda</option>
+                    <option value="bmw">BMW</option>
+                    <option value="mercedes">Mercedes-Benz</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="model">Model</label>
+                  <select id="model" name="model">
+                    <option value="">All Models</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="price-min">Min Price</label>
+                  <select id="price-min" name="price-min">
+                    <option value="">No Min</option>
+                    <option value="5000">$5,000</option>
+                    <option value="10000">$10,000</option>
+                    <option value="15000">$15,000</option>
+                    <option value="20000">$20,000</option>
+                    <option value="30000">$30,000</option>
+                    <option value="50000">$50,000</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="price-max">Max Price</label>
+                  <select id="price-max" name="price-max">
+                    <option value="">No Max</option>
+                    <option value="10000">$10,000</option>
+                    <option value="20000">$20,000</option>
+                    <option value="30000">$30,000</option>
+                    <option value="50000">$50,000</option>
+                    <option value="75000">$75,000</option>
+                    <option value="100000">$100,000</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="location">Location</label>
+                  <select id="location" name="location">
+                    <option value="">All Locations</option>
+                    <option value="sydney">Sydney, NSW</option>
+                    <option value="melbourne">Melbourne, VIC</option>
+                    <option value="brisbane">Brisbane, QLD</option>
+                    <option value="perth">Perth, WA</option>
+                    <option value="adelaide">Adelaide, SA</option>
+                    <option value="canberra">Canberra, ACT</option>
+                    <option value="darwin">Darwin, NT</option>
+                    <option value="hobart">Hobart, TAS</option>
+                  </select>
+                </div>
+
+                <button type="submit" class="search-btn">Search Cars</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="main-content">
+          <section class="section">
+            <h2>Featured Vehicles</h2>
+            <div class="featured-cars" id="featured-cars">
+              <!-- Cars will be populated by JavaScript -->
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="stats-section">
+              <h2>Why Choose CarsAds?</h2>
+              <div class="stats-grid">
+                <div class="stat">
+                  <div class="stat-number">150K+</div>
+                  <div class="stat-label">Cars for Sale</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-number">50K+</div>
+                  <div class="stat-label">Happy Customers</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-number">2000+</div>
+                  <div class="stat-label">Dealers</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-number">15</div>
+                  <div class="stat-label">Years Experience</div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- Search Results Section -->
+      <section id="search-section" style="display: none">
+        <div class="main-content">
+          <div class="filter-bar">
+            <div class="filter-item">
+              <strong>Filters:</strong>
+            </div>
+            <div class="filter-item">
+              <label>Body Type:</label>
+              <select>
+                <option>All</option>
+                <option>Sedan</option>
+                <option>SUV</option>
+                <option>Hatchback</option>
+                <option>Ute</option>
+              </select>
+            </div>
+            <div class="filter-item">
+              <label>Fuel Type:</label>
+              <select>
+                <option>All</option>
+                <option>Petrol</option>
+                <option>Diesel</option>
+                <option>Hybrid</option>
+                <option>Electric</option>
+              </select>
+            </div>
+            <div class="filter-item">
+              <label>Transmission:</label>
+              <select>
+                <option>All</option>
+                <option>Automatic</option>
+                <option>Manual</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="results-header">
+            <div><strong id="results-count">0</strong> cars found</div>
+            <select class="sort-select" onchange="sortResults(this.value)">
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="year-new">Year: Newest First</option>
+              <option value="year-old">Year: Oldest First</option>
+              <option value="km-low">Kilometres: Low to High</option>
+            </select>
+          </div>
+
+          <div class="featured-cars" id="search-results">
+            <!-- Search results will be populated here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Buy Section -->
+      <section id="buy-section" style="display: none">
+        <div class="hero">
+          <div class="hero-content">
+            <h1>Buy Your Perfect Car</h1>
+            <p>
+              Browse thousands of quality vehicles from trusted dealers and
+              private sellers
+            </p>
+          </div>
+        </div>
+
+        <div class="main-content">
+          <div class="section">
+            <div class="buy-categories">
+              <div class="category-grid">
+                <div class="category-card" onclick="filterByType('new')">
+                  <div class="category-icon">🚗</div>
+                  <h3>New Cars</h3>
+                  <p>Latest models with full warranty</p>
+                  <div class="category-count">2,500+ available</div>
+                </div>
+                <div class="category-card" onclick="filterByType('used')">
+                  <div class="category-icon">🔧</div>
+                  <h3>Used Cars</h3>
+                  <p>Quality pre-owned vehicles</p>
+                  <div class="category-count">45,000+ available</div>
+                </div>
+                <div class="category-card" onclick="filterByType('dealer')">
+                  <div class="category-icon">🏢</div>
+                  <h3>Dealer Cars</h3>
+                  <p>Professional dealer network</p>
+                  <div class="category-count">25,000+ available</div>
+                </div>
+                <div class="category-card" onclick="filterByType('private')">
+                  <div class="category-icon">👤</div>
+                  <h3>Private Sales</h3>
+                  <p>Direct from owners</p>
+                  <div class="category-count">20,000+ available</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Popular Searches</h2>
+            <div class="popular-searches">
+              <button class="search-tag" onclick="quickSearch('toyota camry')">
+                Toyota Camry
+              </button>
+              <button class="search-tag" onclick="quickSearch('mazda cx5')">
+                Mazda CX-5
+              </button>
+              <button class="search-tag" onclick="quickSearch('bmw 3 series')">
+                BMW 3 Series
+              </button>
+              <button class="search-tag" onclick="quickSearch('ford ranger')">
+                Ford Ranger
+              </button>
+              <button class="search-tag" onclick="quickSearch('honda civic')">
+                Honda Civic
+              </button>
+              <button
+                class="search-tag"
+                onclick="quickSearch('suv under 30000')"
+              >
+                SUV Under $30k
+              </button>
+              <button class="search-tag" onclick="quickSearch('electric cars')">
+                Electric Cars
+              </button>
+              <button class="search-tag" onclick="quickSearch('family cars')">
+                Family Cars
+              </button>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Browse by Make</h2>
+            <div class="make-grid">
+              <div class="make-card" onclick="searchByMake('toyota')">
+                <div class="make-logo">T</div>
+                <div class="make-name">Toyota</div>
+                <div class="make-count">8,500 cars</div>
+              </div>
+              <div class="make-card" onclick="searchByMake('mazda')">
+                <div class="make-logo">M</div>
+                <div class="make-name">Mazda</div>
+                <div class="make-count">4,200 cars</div>
+              </div>
+              <div class="make-card" onclick="searchByMake('ford')">
+                <div class="make-logo">F</div>
+                <div class="make-name">Ford</div>
+                <div class="make-count">3,800 cars</div>
+              </div>
+              <div class="make-card" onclick="searchByMake('bmw')">
+                <div class="make-logo">B</div>
+                <div class="make-name">BMW</div>
+                <div class="make-count">2,100 cars</div>
+              </div>
+              <div class="make-card" onclick="searchByMake('mercedes')">
+                <div class="make-logo">MB</div>
+                <div class="make-name">Mercedes-Benz</div>
+                <div class="make-count">1,900 cars</div>
+              </div>
+              <div class="make-card" onclick="searchByMake('honda')">
+                <div class="make-logo">H</div>
+                <div class="make-name">Honda</div>
+                <div class="make-count">3,500 cars</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sell Section -->
+      <section id="sell-section" style="display: none">
+        <div class="hero">
+          <div class="hero-content">
+            <h1>Sell Your Car Fast</h1>
+            <p>
+              Get the best price for your vehicle with Australia's most trusted
+              platform
+            </p>
+          </div>
+        </div>
+
+        <div class="main-content">
+          <div class="section">
+            <div class="sell-options">
+              <div class="category-grid">
+                <div class="category-card featured">
+                  <div class="category-icon">⚡</div>
+                  <h3>Instant Cash Offer</h3>
+                  <p>Get an instant valuation and sell immediately</p>
+                  <button class="cta-button" onclick="startValuation()">
+                    Get Instant Offer
+                  </button>
+                </div>
+                <div class="category-card">
+                  <div class="category-icon">📝</div>
+                  <h3>Private Sale</h3>
+                  <p>List your car and sell to private buyers</p>
+                  <button class="cta-button-outline" onclick="createListing()">
+                    Create Listing
+                  </button>
+                </div>
+                <div class="category-card">
+                  <div class="category-icon">🔄</div>
+                  <h3>Trade-In</h3>
+                  <p>Trade your car towards a new purchase</p>
+                  <button class="cta-button-outline" onclick="tradeIn()">
+                    Start Trade-In
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Car Valuation Tool</h2>
+            <div class="valuation-form">
+              <form class="search-form" onsubmit="getValuation(event)">
+                <div class="form-group">
+                  <label for="val-make">Make</label>
+                  <select id="val-make" required>
+                    <option value="">Select Make</option>
+                    <option value="toyota">Toyota</option>
+                    <option value="mazda">Mazda</option>
+                    <option value="ford">Ford</option>
+                    <option value="bmw">BMW</option>
+                    <option value="honda">Honda</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="val-model">Model</label>
+                  <input
+                    type="text"
+                    id="val-model"
+                    placeholder="e.g. Camry"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="val-year">Year</label>
+                  <select id="val-year" required>
+                    <option value="">Select Year</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                    <option value="2019">2019</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="val-km">Kilometres</label>
+                  <input
+                    type="number"
+                    id="val-km"
+                    placeholder="e.g. 50000"
+                    required
+                  />
+                </div>
+                <button type="submit" class="search-btn">
+                  Get Free Valuation
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Why Sell With CarsAds?</h2>
+            <div class="benefits-grid">
+              <div class="benefit-item">
+                <div class="benefit-icon">💰</div>
+                <h4>Best Prices</h4>
+                <p>
+                  Our platform ensures you get the maximum value for your
+                  vehicle
+                </p>
+              </div>
+              <div class="benefit-item">
+                <div class="benefit-icon">⚡</div>
+                <h4>Fast Sales</h4>
+                <p>Most cars sell within 7 days of listing</p>
+              </div>
+              <div class="benefit-item">
+                <div class="benefit-icon">🛡️</div>
+                <h4>Secure Transactions</h4>
+                <p>Safe and secure payment processing</p>
+              </div>
+              <div class="benefit-item">
+                <div class="benefit-icon">📞</div>
+                <h4>Expert Support</h4>
+                <p>Dedicated support team to help throughout the process</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Finance Section -->
+      <section id="finance-section" style="display: none">
+        <div class="hero">
+          <div class="hero-content">
+            <h1>Car Finance Made Easy</h1>
+            <p>
+              Compare rates from leading lenders and get pre-approved in minutes
+            </p>
+          </div>
+        </div>
+
+        <div class="main-content">
+          <div class="section">
+            <div class="finance-calculator">
+              <h2>Loan Calculator</h2>
+              <div class="calculator-form">
+                <form class="search-form" onsubmit="calculateLoan(event)">
+                  <div class="form-group">
+                    <label for="loan-amount">Loan Amount</label>
+                    <input
+                      type="number"
+                      id="loan-amount"
+                      placeholder="$30,000"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="loan-term">Loan Term</label>
+                    <select id="loan-term" required>
+                      <option value="">Select Term</option>
+                      <option value="2">2 years</option>
+                      <option value="3">3 years</option>
+                      <option value="4">4 years</option>
+                      <option value="5">5 years</option>
+                      <option value="7">7 years</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="interest-rate">Interest Rate (%)</label>
+                    <input
+                      type="number"
+                      id="interest-rate"
+                      placeholder="6.5"
+                      step="0.1"
+                      required
+                    />
+                  </div>
+                  <button type="submit" class="search-btn">
+                    Calculate Payments
+                  </button>
+                </form>
+                <div
+                  id="calculation-result"
+                  class="calculation-result"
+                  style="display: none"
+                >
+                  <h3>Your Monthly Payment</h3>
+                  <div class="payment-amount" id="monthly-payment">$0</div>
+                  <div class="payment-details">
+                    <div class="detail-item">
+                      <span>Total Interest:</span>
+                      <span id="total-interest">$0</span>
+                    </div>
+                    <div class="detail-item">
+                      <span>Total Amount:</span>
+                      <span id="total-amount">$0</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Finance Options</h2>
+            <div class="finance-options">
+              <div class="category-grid">
+                <div class="category-card">
+                  <div class="category-icon">🏦</div>
+                  <h3>Car Loan</h3>
+                  <p>Traditional car loans with competitive rates</p>
+                  <div class="rate">From 5.99% p.a.</div>
+                </div>
+                <div class="category-card">
+                  <div class="category-icon">💼</div>
+                  <h3>Chattel Mortgage</h3>
+                  <p>Business car finance with tax benefits</p>
+                  <div class="rate">From 6.49% p.a.</div>
+                </div>
+                <div class="category-card">
+                  <div class="category-icon">📋</div>
+                  <h3>Lease</h3>
+                  <p>Flexible leasing options for individuals and businesses</p>
+                  <div class="rate">From 7.99% p.a.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Our Finance Partners</h2>
+            <div class="partners-grid">
+              <div class="partner-card">
+                <div class="partner-logo">ANZ</div>
+                <div class="partner-rate">From 5.99%</div>
+              </div>
+              <div class="partner-card">
+                <div class="partner-logo">CBA</div>
+                <div class="partner-rate">From 6.49%</div>
+              </div>
+              <div class="partner-card">
+                <div class="partner-logo">NAB</div>
+                <div class="partner-rate">From 6.99%</div>
+              </div>
+              <div class="partner-card">
+                <div class="partner-logo">Westpac</div>
+                <div class="partner-rate">From 7.49%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- News Section -->
+      <section id="news-section" style="display: none">
+        <div class="hero">
+          <div class="hero-content">
+            <h1>Automotive News & Reviews</h1>
+            <p>
+              Stay updated with the latest car news, reviews, and industry
+              insights
+            </p>
+          </div>
+        </div>
+
+        <div class="main-content">
+          <div class="section">
+            <div class="news-categories">
+              <button class="news-filter active" onclick="filterNews('all')">
+                All News
+              </button>
+              <button class="news-filter" onclick="filterNews('reviews')">
+                Car Reviews
+              </button>
+              <button class="news-filter" onclick="filterNews('industry')">
+                Industry News
+              </button>
+              <button class="news-filter" onclick="filterNews('launches')">
+                New Launches
+              </button>
+              <button class="news-filter" onclick="filterNews('tips')">
+                Buying Tips
+              </button>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="news-grid" id="news-articles">
+              <!-- News articles will be populated by JavaScript -->
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Latest Car Reviews</h2>
+            <div class="review-grid">
+              <div class="review-card">
+                <div class="review-image">2024 Toyota RAV4</div>
+                <div class="review-content">
+                  <h4>2024 Toyota RAV4 Review</h4>
+                  <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                  <p>
+                    Australia's best-selling SUV gets even better with updated
+                    features and improved efficiency.
+                  </p>
+                  <div class="review-meta">
+                    <span>By CarsAds Team</span>
+                    <span>2 days ago</span>
+                  </div>
+                </div>
+              </div>
+              <div class="review-card">
+                <div class="review-image">Ford Ranger Raptor</div>
+                <div class="review-content">
+                  <h4>Ford Ranger Raptor Review</h4>
+                  <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                  <p>
+                    The ultimate off-road ute that doesn't compromise on
+                    everyday usability.
+                  </p>
+                  <div class="review-meta">
+                    <span>By CarsAds Team</span>
+                    <span>5 days ago</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact-section" style="display: none">
+        <div class="hero">
+          <div class="hero-content">
+            <h1>Contact CarsAds</h1>
+            <p>We're here to help with all your automotive needs</p>
+          </div>
+        </div>
+
+        <div class="main-content">
+          <div class="section">
+            <div class="contact-grid">
+              <div class="contact-info">
+                <h2>Get In Touch</h2>
+                <div class="contact-methods">
+                  <div class="contact-method">
+                    <div class="contact-icon">📞</div>
+                    <div class="contact-details">
+                      <h4>Phone Support</h4>
+                      <p>1800 CARSADS (1800 227 723)</p>
+                      <p>Mon-Fri: 8am-8pm, Sat-Sun: 9am-5pm</p>
+                    </div>
+                  </div>
+                  <div class="contact-method">
+                    <div class="contact-icon">✉️</div>
+                    <div class="contact-details">
+                      <h4>Email Support</h4>
+                      <p>support@carsads.com.au</p>
+                      <p>We reply within 24 hours</p>
+                    </div>
+                  </div>
+                  <div class="contact-method">
+                    <div class="contact-icon">💬</div>
+                    <div class="contact-details">
+                      <h4>Live Chat</h4>
+                      <p>Available on our website</p>
+                      <p>Mon-Fri: 9am-6pm</p>
+                    </div>
+                  </div>
+                  <div class="contact-method">
+                    <div class="contact-icon">📍</div>
+                    <div class="contact-details">
+                      <h4>Head Office</h4>
+                      <p>Level 10, 123 Collins Street</p>
+                      <p>Melbourne, VIC 3000</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="contact-form-container">
+                <h2>Send Us a Message</h2>
+                <form class="contact-form" onsubmit="sendMessage(event)">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="contact-name">Name *</label>
+                      <input type="text" id="contact-name" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="contact-email">Email *</label>
+                      <input type="email" id="contact-email" required />
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="contact-phone">Phone</label>
+                      <input type="tel" id="contact-phone" />
+                    </div>
+                    <div class="form-group">
+                      <label for="contact-subject">Subject</label>
+                      <select id="contact-subject" required>
+                        <option value="">Select Subject</option>
+                        <option value="buying">Buying a Car</option>
+                        <option value="selling">Selling a Car</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="contact-message">Message *</label>
+                    <textarea id="contact-message" rows="6" required></textarea>
+                  </div>
+                  <button type="submit" class="search-btn">Send Message</button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-container">
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                  <h4>How do I list my car for sale?</h4>
+                  <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                  <p>
+                    You can list your car by clicking "Sell" in the main menu,
+                    then choosing "Create Listing". Fill in your car details,
+                    add photos, and set your price. Your listing will be live
+                    within minutes.
+                  </p>
+                </div>
+              </div>
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                  <h4>Is there a fee to list my car?</h4>
+                  <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                  <p>
+                    Basic listings are free for private sellers. We also offer
+                    premium listing options with enhanced features for better
+                    visibility.
+                  </p>
+                </div>
+              </div>
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                  <h4>How do I get finance for a car?</h4>
+                  <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                  <p>
+                    Visit our Finance section to use our loan calculator and
+                    compare rates from multiple lenders. You can get
+                    pre-approved online in minutes.
+                  </p>
+                </div>
+              </div>
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                  <h4>Can I trade in my current car?</h4>
+                  <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                  <p>
+                    Yes! Many of our dealer partners accept trade-ins. You can
+                    also use our instant valuation tool to get an estimate of
+                    your car's worth.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Buy</h3>
+          <ul>
+            <li><a href="#">New Cars</a></li>
+            <li><a href="#">Used Cars</a></li>
+            <li><a href="#">Dealer Cars</a></li>
+            <li><a href="#">Private Cars</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Sell</h3>
+          <ul>
+            <li><a href="#">Sell My Car</a></li>
+            <li><a href="#">Car Valuation</a></li>
+            <li><a href="#">Trade In</a></li>
+            <li><a href="#">Instant Offer</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>About</h3>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          &copy; 2025 CarsAds. All rights reserved. | Australia's trusted car
+          marketplace
+        </p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
