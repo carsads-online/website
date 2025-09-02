@@ -1,2225 +1,1264 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sell Your Car - CarsAds</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            background: #f8f9fa;
-        }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        background: #f8f9fa;
+      }
 
-        .header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+      .header {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: white;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
 
+      .nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2rem;
+      }
+
+      .logo {
+        font-size: 2rem;
+        font-weight: bold;
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .hero {
+        background: linear-gradient(
+            135deg,
+            rgba(30, 60, 114, 0.9),
+            rgba(42, 82, 152, 0.9)
+          ),
+          url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%23f0f0f0" width="1200" height="400"/><text x="600" y="200" text-anchor="middle" fill="%23999" font-size="20" font-family="Arial">Car Selling Background</text></svg>')
+            center/cover;
+        color: white;
+        padding: 4rem 0;
+        text-align: center;
+      }
+
+      .hero-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero p {
+        font-size: 1.3rem;
+        margin-bottom: 3rem;
+        opacity: 0.9;
+      }
+
+      .main-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+      }
+
+      .section {
+        margin-bottom: 3rem;
+      }
+
+      .section h2 {
+        font-size: 2.2rem;
+        margin-bottom: 1.5rem;
+        color: #333;
+        text-align: center;
+      }
+
+      .category-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .category-card {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        border: 2px solid transparent;
+      }
+
+      .category-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .category-card:hover::before {
+        left: 100%;
+      }
+
+      .category-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        border-color: #667eea;
+      }
+
+      .category-card.featured {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-color: transparent;
+      }
+
+      .category-card.featured:hover {
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+
+      .category-icon {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .category-card:not(.featured) .category-icon {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .category-card h3 {
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+      }
+
+      .category-card p {
+        margin-bottom: 2rem;
+        opacity: 0.8;
+      }
+
+      .cta-button,
+      .cta-button-outline {
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .cta-button {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+      }
+
+      .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
+      }
+
+      .cta-button-outline {
+        background: transparent;
+        border: 2px solid #667eea;
+        color: #667eea;
+      }
+
+      .cta-button-outline:hover {
+        background: #667eea;
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      .category-card.featured .cta-button {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .category-card.featured .cta-button:hover {
+        background: white;
+        color: #667eea;
+      }
+
+      .valuation-form {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin-top: 2rem;
+      }
+
+      .search-form {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        align-items: end;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-group label {
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .form-group select,
+      .form-group input {
+        padding: 0.8rem;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-group select:focus,
+      .form-group input:focus {
+        outline: none;
+        border-color: #2a5298;
+        box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+      }
+
+      .search-btn {
+        background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .search-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+      }
+
+      .valuation-result {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        padding: 2rem;
+        border-radius: 12px;
+        margin-top: 2rem;
+        text-align: center;
+      }
+
+      .valuation-result h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .valuation-price {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+
+      .valuation-range {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 1.5rem;
+      }
+
+      .valuation-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .valuation-actions button {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .valuation-actions button:hover {
+        background: white;
+        color: #28a745;
+      }
+
+      .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .benefit-item {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .benefit-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .benefit-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .benefit-item h4 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        color: #333;
+      }
+
+      .benefit-item p {
+        color: #666;
+        line-height: 1.6;
+      }
+
+      .selling-process {
+        background: white;
+        padding: 3rem 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin-top: 3rem;
+      }
+
+      .process-steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .process-step {
+        text-align: center;
+        position: relative;
+      }
+
+      .step-number {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin: 0 auto 1rem;
+      }
+
+      .process-step h4 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: #333;
+      }
+
+      .process-step p {
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .testimonials {
+        background: #f8f9fa;
+        padding: 3rem 2rem;
+        border-radius: 15px;
+        margin-top: 3rem;
+      }
+
+      .testimonial-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .testimonial-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .testimonial-rating {
+        color: #ffc107;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+
+      .testimonial-text {
+        color: #666;
+        margin-bottom: 1.5rem;
+        font-style: italic;
+      }
+
+      .testimonial-author {
+        color: #333;
+        font-weight: 600;
+      }
+
+      .footer {
+        background: #2c3e50;
+        color: white;
+        padding: 3rem 0 1rem;
+        margin-top: 4rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+
+      .footer-section h3 {
+        margin-bottom: 1rem;
+        color: #4ecdc4;
+      }
+
+      .footer-section ul {
+        list-style: none;
+      }
+
+      .footer-section a {
+        color: #bbb;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-section a:hover {
+        color: #4ecdc4;
+      }
+
+      .footer-bottom {
+        border-top: 1px solid #34495e;
+        margin-top: 2rem;
+        padding-top: 1rem;
+        text-align: center;
+        color: #bbb;
+      }
+
+      @media (max-width: 768px) {
         .nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            background: rgba(255,255,255,0.1);
-            transform: translateY(-2px);
-        }
-
-        .hero {
-            background: linear-gradient(135deg, rgba(30,60,114,0.9), rgba(42,82,152,0.9)), 
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%23f0f0f0" width="1200" height="400"/><text x="600" y="200" text-anchor="middle" fill="%23999" font-size="20" font-family="Arial">Car Selling Background</text></svg>') center/cover;
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
+          flex-direction: column;
+          gap: 1rem;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 3rem;
-            opacity: 0.9;
-        }
-
-        .main-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        .section {
-            margin-bottom: 3rem;
-        }
-
-        .section h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1.5rem;
-            color: #333;
-            text-align: center;
-        }
-
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .category-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            border: 2px solid transparent;
-        }
-
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .category-card:hover::before {
-            left: 100%;
-        }
-
-        .category-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            border-color: #667eea;
-        }
-
-        .category-card.featured {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-color: transparent;
-        }
-
-        .category-card.featured:hover {
-            border-color: rgba(255,255,255,0.3);
-        }
-
-        .category-icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .category-card:not(.featured) .category-icon {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .category-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-        }
-
-        .category-card p {
-            margin-bottom: 2rem;
-            opacity: 0.8;
-        }
-
-        .cta-button, .cta-button-outline {
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .cta-button {
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
-        }
-
-        .cta-button-outline {
-            background: transparent;
-            border: 2px solid #667eea;
-            color: #667eea;
-        }
-
-        .cta-button-outline:hover {
-            background: #667eea;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .category-card.featured .cta-button {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-
-        .category-card.featured .cta-button:hover {
-            background: white;
-            color: #667eea;
-        }
-
-        .valuation-form {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-top: 2rem;
+          font-size: 2.5rem;
         }
 
         .search-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            align-items: end;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .form-group select,
-        .form-group input {
-            padding: 0.8rem;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group select:focus,
-        .form-group input:focus {
-            outline: none;
-            border-color: #2a5298;
-            box-shadow: 0 0 0 3px rgba(42,82,152,0.1);
-        }
-
-        .search-btn {
-            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .search-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255,107,107,0.3);
-        }
-
-        .valuation-result {
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-top: 2rem;
-            text-align: center;
-        }
-
-        .valuation-result h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .valuation-price {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        .valuation-range {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 1.5rem;
-        }
-
-        .valuation-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .valuation-actions button {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 2px solid rgba(255,255,255,0.3);
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .valuation-actions button:hover {
-            background: white;
-            color: #28a745;
-        }
-
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .benefit-item {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .benefit-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-
-        .benefit-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .benefit-item h4 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-
-        .benefit-item p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .selling-process {
-            background: white;
-            padding: 3rem 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-top: 3rem;
-        }
-
-        .process-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .process-step {
-            text-align: center;
-            position: relative;
-        }
-
-        .step-number {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 0 auto 1rem;
-        }
-
-        .process-step h4 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-
-        .process-step p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .testimonials {
-            background: #f8f9fa;
-            padding: 3rem 2rem;
-            border-radius: 15px;
-            margin-top: 3rem;
-        }
-
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .testimonial-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .testimonial-rating {
-            color: #ffc107;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .testimonial-text {
-            color: #666;
-            margin-bottom: 1.5rem;
-            font-style: italic;
-        }
-
-        .testimonial-author {
-            color: #333;
-            font-weight: 600;
-        }
-
-        .footer {
-            background: #2c3e50;
-            color: white;
-            padding: 3rem 0 1rem;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: #4ecdc4;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section a {
-            color: #bbb;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-section a:hover {
-            color: #4ecdc4;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #34495e;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            text-align: center;
-            color: #bbb;
-        }
-
-        @media (max-width: 768px) {
-            .nav {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .search-form {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                gap: 1rem;
-            }
-
-            .category-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .valuation-actions {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .valuation-price {
-                font-size: 2.5rem;
-            }
-        }
-
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
-</head>
-<body>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sell Your Car - CarsAds</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            background: #f8f9fa;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+          grid-template-columns: 1fr;
         }
 
         .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            background: rgba(255,255,255,0.1);
-            transform: translateY(-2px);
-        }
-
-        .hero {
-            background: linear-gradient(135deg, rgba(30,60,114,0.9), rgba(42,82,152,0.9)), 
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%23f0f0f0" width="1200" height="400"/><text x="600" y="200" text-anchor="middle" fill="%23999" font-size="20" font-family="Arial">Car Selling Background</text></svg>') center/cover;
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 3rem;
-            opacity: 0.9;
-        }
-
-        .main-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        .section {
-            margin-bottom: 3rem;
-        }
-
-        .section h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1.5rem;
-            color: #333;
-            text-align: center;
+          gap: 1rem;
         }
 
         .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .category-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            border: 2px solid transparent;
-        }
-
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .category-card:hover::before {
-            left: 100%;
-        }
-
-        .category-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            border-color: #667eea;
-        }
-
-        .category-card.featured {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-color: transparent;
-        }
-
-        .category-card.featured:hover {
-            border-color: rgba(255,255,255,0.3);
-        }
-
-        .category-icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .category-card:not(.featured) .category-icon {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .category-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-        }
-
-        .category-card p {
-            margin-bottom: 2rem;
-            opacity: 0.8;
-        }
-
-        .cta-button, .cta-button-outline {
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .cta-button {
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
-        }
-
-        .cta-button-outline {
-            background: transparent;
-            border: 2px solid #667eea;
-            color: #667eea;
-        }
-
-        .cta-button-outline:hover {
-            background: #667eea;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .category-card.featured .cta-button {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-
-        .category-card.featured .cta-button:hover {
-            background: white;
-            color: #667eea;
-        }
-
-        .valuation-form {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-top: 2rem;
-        }
-
-        .search-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            align-items: end;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .form-group select,
-        .form-group input {
-            padding: 0.8rem;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group select:focus,
-        .form-group input:focus {
-            outline: none;
-            border-color: #2a5298;
-            box-shadow: 0 0 0 3px rgba(42,82,152,0.1);
-        }
-
-        .search-btn {
-            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .search-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255,107,107,0.3);
-        }
-
-        .valuation-result {
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-top: 2rem;
-            text-align: center;
-        }
-
-        .valuation-result h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .valuation-price {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        .valuation-range {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 1.5rem;
+          grid-template-columns: 1fr;
         }
 
         .valuation-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
+          flex-direction: column;
+          align-items: center;
         }
 
-        .valuation-actions button {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 2px solid rgba(255,255,255,0.3);
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .valuation-price {
+          font-size: 2.5rem;
         }
+      }
 
-        .valuation-actions button:hover {
-            background: white;
-            color: #28a745;
+      .loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      .fade-in {
+        animation: fadeIn 0.5s ease-in;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
-
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
-
-        .benefit-item {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .benefit-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-
-        .benefit-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .benefit-item h4 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-
-        .benefit-item p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .selling-process {
-            background: white;
-            padding: 3rem 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-top: 3rem;
-        }
-
-        .process-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .process-step {
-            text-align: center;
-            position: relative;
-        }
-
-        .step-number {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 0 auto 1rem;
-        }
-
-        .process-step h4 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-
-        .process-step p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .testimonials {
-            background: #f8f9fa;
-            padding: 3rem 2rem;
-            border-radius: 15px;
-            margin-top: 3rem;
-        }
-
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .testimonial-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .testimonial-rating {
-            color: #ffc107;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .testimonial-text {
-            color: #666;
-            margin-bottom: 1.5rem;
-            font-style: italic;
-        }
-
-        .testimonial-author {
-            color: #333;
-            font-weight: 600;
-        }
-
-        .footer {
-            background: #2c3e50;
-            color: white;
-            padding: 3rem 0 1rem;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: #4ecdc4;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section a {
-            color: #bbb;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-section a:hover {
-            color: #4ecdc4;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #34495e;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            text-align: center;
-            color: #bbb;
-        }
-
-        @media (max-width: 768px) {
-            .nav {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .search-form {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                gap: 1rem;
-            }
-
-            .category-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .valuation-actions {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .valuation-price {
-                font-size: 2.5rem;
-            }
-        }
-
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+      }
     </style>
-</head>
-<body>
-    <header class="header">
-        <nav class="nav">
-          <div class="logo">
-            <a href="index.html" class="logo-link">
-              <img src="images/logo.png" alt="CarsAds Logo" class="logo-img" />
-              <span class="logo">CarsAds</span>
-            </a>
-          </div>
-          <ul class="nav-links">
-            <li><a href="index.html" onclick="showSection('home')">Home</a></li>
-            <li><a href="buy.html" onclick="showSection('buy')">Buy</a></li>
-            <li><a href="sell.html" onclick="showSection('sell')">Sell</a></li>
-          </ul>
-        </nav>
-    </header>
+  </head>
+  <body>
+     <header class="header">
+          <nav class="nav">
+            <div class="logo">
+              <a href="index.html" class="logo-link">
+                <img
+                  src="images/logo.png"
+                  alt="CarsAds Logo"
+                  class="logo-img"
+                />
+                <span class="logo">CarsAds</span>
+              </a>
+            </div>
+            <ul class="nav-links">
+              <li>
+                <a href="index.html" onclick="showSection('home')">Home</a>
+              </li>
+              <li><a href="buy.html" onclick="showSection('buy')">Buy</a></li>
+              <li>
+                <a href="sell.html" onclick="showSection('sell')">Sell</a>
+              </li>
+            </ul>
+          </nav>
+        </header>
 
-    <div class="hero">
-        <div class="hero-content">
+        <div class="hero">
+          <div class="hero-content">
             <h1>Sell Your Car Fast</h1>
-            <p>Get the best price for your vehicle with Australia's most trusted platform</p>
+            <p>
+              Get the best price for your vehicle with Australia's most trusted
+              platform
+            </p>
+          </div>
         </div>
-    </div>
 
-    <div class="main-content">
-        <!-- Selling Options Section -->
-        <div class="section">
+        <div class="main-content">
+          <!-- Selling Options Section -->
+          <div class="section">
             <h2>Choose How to Sell</h2>
             <div class="category-grid">
-                <div class="category-card featured">
-                    <div class="category-icon">⚡</div>
-                    <h3>Instant Cash Offer</h3>
-                    <p>Get an instant valuation and sell immediately. No hassle, no waiting, guaranteed sale within 24 hours.</p>
-                    <button class="cta-button" onclick="startInstantOffer()">Get Instant Offer</button>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">📝</div>
-                    <h3>Private Sale</h3>
-                    <p>List your car and sell to private buyers. Reach thousands of potential buyers across Australia.</p>
-                    <button class="cta-button-outline" onclick="createListing()">Create Listing</button>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🔄</div>
-                    <h3>Trade-In</h3>
-                    <p>Trade your car towards a new purchase. Convenient and hassle-free with our dealer network.</p>
-                    <button class="cta-button-outline" onclick="tradeIn()">Start Trade-In</button>
-                </div>
+              <div class="category-card featured">
+                <div class="category-icon">⚡</div>
+                <h3>Instant Cash Offer</h3>
+                <p>
+                  Get an instant valuation and sell immediately. No hassle, no
+                  waiting, guaranteed sale within 24 hours.
+                </p>
+                <button class="cta-button" onclick="startInstantOffer()">
+                  Get Instant Offer
+                </button>
+              </div>
+              <div class="category-card">
+                <div class="category-icon">📝</div>
+                <h3>Private Sale</h3>
+                <p>
+                  List your car and sell to private buyers. Reach thousands of
+                  potential buyers across Australia.
+                </p>
+                <button class="cta-button-outline" onclick="createListing()">
+                  Create Listing
+                </button>
+              </div>
+              <div class="category-card">
+                <div class="category-icon">🔄</div>
+                <h3>Trade-In</h3>
+                <p>
+                  Trade your car towards a new purchase. Convenient and
+                  hassle-free with our dealer network.
+                </p>
+                <button class="cta-button-outline" onclick="tradeIn()">
+                  Start Trade-In
+                </button>
+              </div>
             </div>
-        </div>
+          </div>
 
-        <!-- Car Valuation Tool -->
-        <div class="section">
+          <!-- Car Valuation Tool -->
+          <div class="section">
             <h2>Free Car Valuation</h2>
-            <p style="text-align: center; color: #666; margin-bottom: 1rem;">Get an instant estimate of your car's worth</p>
+            <p style="text-align: center; color: #666; margin-bottom: 1rem">
+              Get an instant estimate of your car's worth
+            </p>
             <div class="valuation-form">
-                <form class="search-form" onsubmit="getValuation(event)">
-                    <div class="form-group">
-                        <label for="val-make">Make *</label>
-                        <select id="val-make" required>
-                            <option value="">Select Make</option>
-                            <option value="toyota">Toyota</option>
-                            <option value="mazda">Mazda</option>
-                            <option value="ford">Ford</option>
-                            <option value="honda">Honda</option>
-                            <option value="nissan">Nissan</option>
-                            <option value="bmw">BMW</option>
-                            <option value="mercedes">Mercedes-Benz</option>
-                            <option value="audi">Audi</option>
-                            <option value="volkswagen">Volkswagen</option>
-                            <option value="hyundai">Hyundai</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="val-model">Model *</label>
-                        <input type="text" id="val-model" placeholder="e.g. Camry, Corolla" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="val-year">Year *</label>
-                        <select id="val-year" required>
-                            <option value="">Select Year</option>
-                            <option value="2024">2024</option>
-                            <option value="2023">2023</option>
-                            <option value="2022">2022</option>
-                            <option value="2021">2021</option>
-                            <option value="2020">2020</option>
-                            <option value="2019">2019</option>
-                            <option value="2018">2018</option>
-                            <option value="2017">2017</option>
-                            <option value="2016">2016</option>
-                            <option value="2015">2015</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="val-km">Kilometres *</label>
-                        <input type="number" id="val-km" placeholder="e.g. 50000" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="val-condition">Condition *</label>
-                        <select id="val-condition" required>
-                            <option value="">Select Condition</option>
-                            <option value="excellent">Excellent</option>
-                            <option value="very-good">Very Good</option>
-                            <option value="good">Good</option>
-                            <option value="fair">Fair</option>
-                            <option value="poor">Poor</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="search-btn">Get Free Valuation</button>
-                </form>
-                
-                <div id="valuation-result" class="valuation-result" style="display: none;">
-                    <!-- Results will be populated here -->
+              <form class="search-form" onsubmit="getValuation(event)">
+                <div class="form-group">
+                  <label for="val-make">Make *</label>
+                  <select id="val-make" required>
+                    <option value="">Select Make</option>
+                    <option value="toyota">Toyota</option>
+                    <option value="mazda">Mazda</option>
+                    <option value="ford">Ford</option>
+                    <option value="honda">Honda</option>
+                    <option value="nissan">Nissan</option>
+                    <option value="bmw">BMW</option>
+                    <option value="mercedes">Mercedes-Benz</option>
+                    <option value="audi">Audi</option>
+                    <option value="volkswagen">Volkswagen</option>
+                    <option value="hyundai">Hyundai</option>
+                  </select>
                 </div>
-            </div>
-        </div>
+                <div class="form-group">
+                  <label for="val-model">Model *</label>
+                  <input
+                    type="text"
+                    id="val-model"
+                    placeholder="e.g. Camry, Corolla"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="val-year">Year *</label>
+                  <select id="val-year" required>
+                    <option value="">Select Year</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                    <option value="2019">2019</option>
+                    <option value="2018">2018</option>
+                    <option value="2017">2017</option>
+                    <option value="2016">2016</option>
+                    <option value="2015">2015</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="val-km">Kilometres *</label>
+                  <input
+                    type="number"
+                    id="val-km"
+                    placeholder="e.g. 50000"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="val-condition">Condition *</label>
+                  <select id="val-condition" required>
+                    <option value="">Select Condition</option>
+                    <option value="excellent">Excellent</option>
+                    <option value="very-good">Very Good</option>
+                    <option value="good">Good</option>
+                    <option value="fair">Fair</option>
+                    <option value="poor">Poor</option>
+                  </select>
+                </div>
+                <button type="submit" class="search-btn">
+                  Get Free Valuation
+                </button>
+              </form>
 
-        <!-- How It Works Section -->
-        <div class="selling-process">
-            <h2 style="text-align: center; margin-bottom: 2rem;">How to Sell Your Car</h2>
+              <div
+                id="valuation-result"
+                class="valuation-result"
+                style="display: none"
+              >
+                <!-- Results will be populated here -->
+              </div>
+            </div>
+          </div>
+
+          <!-- How It Works Section -->
+          <div class="selling-process">
+            <h2 style="text-align: center; margin-bottom: 2rem">
+              How to Sell Your Car
+            </h2>
             <div class="process-steps">
-                <div class="process-step">
-                    <div class="step-number">1</div>
-                    <h4>Get Valuation</h4>
-                    <p>Use our free tool to get an instant estimate of your car's value</p>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">2</div>
-                    <h4>Choose Option</h4>
-                    <p>Select instant cash offer, private sale, or trade-in based on your needs</p>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">3</div>
-                    <h4>Upload Details</h4>
-                    <p>Add photos and details about your car to attract buyers</p>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">4</div>
-                    <h4>Get Offers</h4>
-                    <p>Receive offers from buyers or our instant cash service</p>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">5</div>
-                    <h4>Complete Sale</h4>
-                    <p>Finalize the sale with secure payment and transfer</p>
-                </div>
+              <div class="process-step">
+                <div class="step-number">1</div>
+                <h4>Get Valuation</h4>
+                <p>
+                  Use our free tool to get an instant estimate of your car's
+                  value
+                </p>
+              </div>
+              <div class="process-step">
+                <div class="step-number">2</div>
+                <h4>Choose Option</h4>
+                <p>
+                  Select instant cash offer, private sale, or trade-in based on
+                  your needs
+                </p>
+              </div>
+              <div class="process-step">
+                <div class="step-number">3</div>
+                <h4>Upload Details</h4>
+                <p>Add photos and details about your car to attract buyers</p>
+              </div>
+              <div class="process-step">
+                <div class="step-number">4</div>
+                <h4>Get Offers</h4>
+                <p>Receive offers from buyers or our instant cash service</p>
+              </div>
+              <div class="process-step">
+                <div class="step-number">5</div>
+                <h4>Complete Sale</h4>
+                <p>Finalize the sale with secure payment and transfer</p>
+              </div>
             </div>
-        </div>
+          </div>
 
-        <!-- Benefits Section -->
-        <div class="section">
+          <!-- Benefits Section -->
+          <div class="section">
             <h2>Why Sell With CarsAds?</h2>
             <div class="benefits-grid">
-                <div class="benefit-item">
-                    <div class="benefit-icon">💰</div>
-                    <h4>Best Prices</h4>
-                    <p>Our platform ensures you get the maximum value for your vehicle with competitive market pricing and instant offers.</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">⚡</div>
-                    <h4>Fast Sales</h4>
-                    <p>Most cars sell within 7 days of listing. Our instant cash offer provides immediate sale options.</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">🛡️</div>
-                    <h4>Secure Transactions</h4>
-                    <p>Safe and secure payment processing with fraud protection and verified buyers only.</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">📞</div>
-                    <h4>Expert Support</h4>
-                    <p>Dedicated support team to help throughout the selling process, from listing to final sale.</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">📈</div>
-                    <h4>Maximum Exposure</h4>
-                    <p>Your car is seen by thousands of potential buyers across Australia through our network.</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">🔍</div>
-                    <h4>Free Inspections</h4>
-                    <p>Professional vehicle inspections available to boost buyer confidence and sale price.</p>
-                </div>
+              <div class="benefit-item">
+                <div class="benefit-icon">💰</div>
+                <h4>Best Prices</h4>
+                <p>
+                  Our platform ensures you get the maximum value for your
+                  vehicle with competitive market pricing and instant offers.
+                </p>
+              </div>
+              <div class="benefit-item">
+                <div class="benefit-icon">⚡</div>
+                <h4>Fast Sales</h4>
+                <p>
+                  Most cars sell within 7 days of listing. Our instant cash
+                  offer provides immediate sale options.
+                </p>
+              </div>
+              <div class="benefit-item">
+                <div class="benefit-icon">🛡️</div>
+                <h4>Secure Transactions</h4>
+                <p>
+                  Safe and secure payment processing with fraud protection and
+                  verified buyers only.
+                </p>
+              </div>
+              <div class="benefit-item">
+                <div class="benefit-icon">📞</div>
+                <h4>Expert Support</h4>
+                <p>
+                  Dedicated support team to help throughout the selling process,
+                  from listing to final sale.
+                </p>
+              </div>
+              <div class="benefit-item">
+                <div class="benefit-icon">📈</div>
+                <h4>Maximum Exposure</h4>
+                <p>
+                  Your car is seen by thousands of potential buyers across
+                  Australia through our network.
+                </p>
+              </div>
+              <div class="benefit-item">
+                <div class="benefit-icon">🔍</div>
+                <h4>Free Inspections</h4>
+                <p>
+                  Professional vehicle inspections available to boost buyer
+                  confidence and sale price.
+                </p>
+              </div>
             </div>
-        </div>
+          </div>
 
-        <!-- Customer Testimonials -->
-        <div class="testimonials">
-            <h2 style="text-align: center; color: #333;">What Our Sellers Say</h2>
+          <!-- Customer Testimonials -->
+          <div class="testimonials">
+            <h2 style="text-align: center; color: #333">
+              What Our Sellers Say
+            </h2>
             <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
-                    <div class="testimonial-text">
-                        "Sold my Toyota Camry in just 3 days! The instant valuation was spot on and the whole process was incredibly smooth."
-                    </div>
-                    <div class="testimonial-author">Sarah M., Sydney</div>
+              <div class="testimonial-card">
+                <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                <div class="testimonial-text">
+                  "Sold my Toyota Camry in just 3 days! The instant valuation
+                  was spot on and the whole process was incredibly smooth."
                 </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
-                    <div class="testimonial-text">
-                        "The instant cash offer saved me so much time. No dealing with timewasters, just a quick sale at a fair price."
-                    </div>
-                    <div class="testimonial-author">Michael K., Melbourne</div>
+                <div class="testimonial-author">Sarah M., Sydney</div>
+              </div>
+              <div class="testimonial-card">
+                <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                <div class="testimonial-text">
+                  "The instant cash offer saved me so much time. No dealing with
+                  timewasters, just a quick sale at a fair price."
                 </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
-                    <div class="testimonial-text">
-                        "Great support team helped me through every step. Got $3,000 more than I expected for my BMW!"
-                    </div>
-                    <div class="testimonial-author">Lisa R., Brisbane</div>
+                <div class="testimonial-author">Michael K., Melbourne</div>
+              </div>
+              <div class="testimonial-card">
+                <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                <div class="testimonial-text">
+                  "Great support team helped me through every step. Got $3,000
+                  more than I expected for my BMW!"
                 </div>
+                <div class="testimonial-author">Lisa R., Brisbane</div>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
 
-    <footer class="footer">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h3>Buy</h3>
-            <ul>
-              <li><a href="#">New Cars</a></li>
-              <li><a href="#">Used Cars</a></li>
-              <li><a href="#">Dealer Cars</a></li>
-              <li><a href="#">Private Cars</a></li>
-            </ul>
+        <footer class="footer">
+          <div class="footer-content">
+            <div class="footer-section">
+              <h3>Buy</h3>
+              <ul>
+                <li><a href="#">New Cars</a></li>
+                <li><a href="#">Used Cars</a></li>
+                <li><a href="#">Dealer Cars</a></li>
+                <li><a href="#">Private Cars</a></li>
+              </ul>
+            </div>
+            <div class="footer-section">
+              <h3>Sell</h3>
+              <ul>
+                <li><a href="#">Sell My Car</a></li>
+                <li><a href="#">Car Valuation</a></li>
+                <li><a href="#">Trade In</a></li>
+                <li><a href="#">Instant Offer</a></li>
+              </ul>
+            </div>
+            <div class="footer-section">
+              <h3>About</h3>
+              <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+              </ul>
+            </div>
           </div>
-          <div class="footer-section">
-            <h3>Sell</h3>
-            <ul>
-              <li><a href="#">Sell My Car</a></li>
-              <li><a href="#">Car Valuation</a></li>
-              <li><a href="#">Trade In</a></li>
-              <li><a href="#">Instant Offer</a></li>
-            </ul>
+          <div class="footer-bottom">
+            <p>
+              &copy; 2025 CarsAds. All rights reserved. | Australia's trusted
+              car marketplace
+            </p>
           </div>
-          <div class="footer-section">
-            <h3>About</h3>
-            <ul>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Contact</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>
-            &copy; 2025 CarsAds. All rights reserved. | Australia's trusted car
-            marketplace
-          </p>
-        </div>
-    </footer>
+        </footer>
 
-    <script>
-        // Car valuation data (simplified pricing model)
-        const valuationData = {
+        <script>
+          // Car valuation data (simplified pricing model)
+          const valuationData = {
             toyota: {
-                camry: { basePrice: 35000, depreciation: 0.15 },
-                corolla: { basePrice: 28000, depreciation: 0.12 },
-                rav4: { basePrice: 42000, depreciation: 0.10 },
-                hilux: { basePrice: 48000, depreciation: 0.08 }
+              camry: { basePrice: 35000, depreciation: 0.15 },
+              corolla: { basePrice: 28000, depreciation: 0.12 },
+              rav4: { basePrice: 42000, depreciation: 0.1 },
+              hilux: { basePrice: 48000, depreciation: 0.08 },
             },
             mazda: {
-                cx5: { basePrice: 45000, depreciation: 0.14 },
-                '3': { basePrice: 32000, depreciation: 0.13 },
-                cx3: { basePrice: 35000, depreciation: 0.15 }
+              cx5: { basePrice: 45000, depreciation: 0.14 },
+              3: { basePrice: 32000, depreciation: 0.13 },
+              cx3: { basePrice: 35000, depreciation: 0.15 },
             },
             ford: {
-                ranger: { basePrice: 52000, depreciation: 0.12 },
-                focus: { basePrice: 28000, depreciation: 0.16 },
-                territory: { basePrice: 38000, depreciation: 0.18 }
+              ranger: { basePrice: 52000, depreciation: 0.12 },
+              focus: { basePrice: 28000, depreciation: 0.16 },
+              territory: { basePrice: 38000, depreciation: 0.18 },
             },
             bmw: {
-                '320i': { basePrice: 65000, depreciation: 0.20 },
-                'x3': { basePrice: 75000, depreciation: 0.18 },
-                '118i': { basePrice: 45000, depreciation: 0.22 }
+              "320i": { basePrice: 65000, depreciation: 0.2 },
+              x3: { basePrice: 75000, depreciation: 0.18 },
+              "118i": { basePrice: 45000, depreciation: 0.22 },
             },
             mercedes: {
-                'c300': { basePrice: 78000, depreciation: 0.22 },
-                'glc': { basePrice: 82000, depreciation: 0.20 },
-                'a200': { basePrice: 48000, depreciation: 0.24 }
-            }
-        };
+              c300: { basePrice: 78000, depreciation: 0.22 },
+              glc: { basePrice: 82000, depreciation: 0.2 },
+              a200: { basePrice: 48000, depreciation: 0.24 },
+            },
+          };
 
-        // Condition multipliers
-        const conditionMultipliers = {
+          // Condition multipliers
+          const conditionMultipliers = {
             excellent: 1.0,
-            'very-good': 0.92,
+            "very-good": 0.92,
             good: 0.85,
             fair: 0.75,
-            poor: 0.60
-        };
+            poor: 0.6,
+          };
 
-        // Get car valuation
-        function getValuation(event) {
+          // Get car valuation
+          function getValuation(event) {
             event.preventDefault();
-            
+
             const form = event.target;
-            const submitBtn = form.querySelector('.search-btn');
-            const resultDiv = document.getElementById('valuation-result');
-            
+            const submitBtn = form.querySelector(".search-btn");
+            const resultDiv = document.getElementById("valuation-result");
+
             // Show loading state
-            submitBtn.textContent = 'Calculating...';
-            submitBtn.classList.add('loading');
-            
+            submitBtn.textContent = "Calculating...";
+            submitBtn.classList.add("loading");
+
             // Get form data
-            const make = document.getElementById('val-make').value.toLowerCase();
-            const model = document.getElementById('val-model').value.toLowerCase().replace(/\s+/g, '');
-            const year = parseInt(document.getElementById('val-year').value);
-            const km = parseInt(document.getElementById('val-km').value);
-            const condition = document.getElementById('val-condition').value;
-            
+            const make = document
+              .getElementById("val-make")
+              .value.toLowerCase();
+            const model = document
+              .getElementById("val-model")
+              .value.toLowerCase()
+              .replace(/\s+/g, "");
+            const year = parseInt(document.getElementById("val-year").value);
+            const km = parseInt(document.getElementById("val-km").value);
+            const condition = document.getElementById("val-condition").value;
+
             // Simulate API call delay
             setTimeout(() => {
-                const valuation = calculateCarValue(make, model, year, km, condition);
-                displayValuation(valuation);
-                
-                // Reset button
-                submitBtn.textContent = 'Get Free Valuation';
-                submitBtn.classList.remove('loading');
-                
-                // Show result with animation
-                resultDiv.style.display = 'block';
-                resultDiv.classList.add('fade-in');
-                
-                // Scroll to result
-                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 2000);
-        }
+              const valuation = calculateCarValue(
+                make,
+                model,
+                year,
+                km,
+                condition
+              );
+              displayValuation(valuation);
 
-        // Calculate car value based on inputs
-        function calculateCarValue(make, model, year, km, condition) {
+              // Reset button
+              submitBtn.textContent = "Get Free Valuation";
+              submitBtn.classList.remove("loading");
+
+              // Show result with animation
+              resultDiv.style.display = "block";
+              resultDiv.classList.add("fade-in");
+
+              // Scroll to result
+              resultDiv.scrollIntoView({ behavior: "smooth", block: "center" });
+            }, 2000);
+          }
+
+          // Calculate car value based on inputs
+          function calculateCarValue(make, model, year, km, condition) {
             let basePrice = 25000; // Default base price
             let depreciation = 0.15; // Default depreciation
-            
+
             // Try to find specific model data
             if (valuationData[make] && valuationData[make][model]) {
-                basePrice = valuationData[make][make][model].basePrice;
-                depreciation = valuationData[make][model].depreciation;
+              basePrice = valuationData[make][make][model].basePrice;
+              depreciation = valuationData[make][model].depreciation;
             } else if (valuationData[make]) {
-                // Use average for the make
-                const models = Object.values(valuationData[make]);
-                basePrice = models.reduce((sum, m) => sum + m.basePrice, 0) / models.length;
-                depreciation = models.reduce((sum, m) => sum + m.depreciation, 0) / models.length;
+              // Use average for the make
+              const models = Object.values(valuationData[make]);
+              basePrice =
+                models.reduce((sum, m) => sum + m.basePrice, 0) / models.length;
+              depreciation =
+                models.reduce((sum, m) => sum + m.depreciation, 0) /
+                models.length;
             }
-            
+
             // Calculate age depreciation
             const currentYear = 2025;
             const age = currentYear - year;
             const ageDepreciation = Math.pow(1 - depreciation, age);
-            
+
             // Apply km depreciation (more km = lower value)
             const kmFactor = Math.max(0.5, 1 - (km / 200000) * 0.3);
-            
+
             // Apply condition multiplier
             const conditionFactor = conditionMultipliers[condition] || 0.85;
-            
+
             // Calculate final price
-            const estimatedValue = Math.round(basePrice * ageDepreciation * kmFactor * conditionFactor);
+            const estimatedValue = Math.round(
+              basePrice * ageDepreciation * kmFactor * conditionFactor
+            );
             const minValue = Math.round(estimatedValue * 0.85);
             const maxValue = Math.round(estimatedValue * 1.15);
-            
-            return {
-                estimated: estimatedValue,
-                min: minValue,
-                max: maxValue,
-                make: make.charAt(0).toUpperCase() + make.slice(1),
-                model: model.charAt(0).toUpperCase() + model.slice(1),
-                year: year
-            };
-        }
 
-        // Display valuation results
-        function displayValuation(valuation) {
-            const resultDiv = document.getElementById('valuation-result');
-            
+            return {
+              estimated: estimatedValue,
+              min: minValue,
+              max: maxValue,
+              make: make.charAt(0).toUpperCase() + make.slice(1),
+              model: model.charAt(0).toUpperCase() + model.slice(1),
+              year: year,
+            };
+          }
+
+          // Display valuation results
+          function displayValuation(valuation) {
+            const resultDiv = document.getElementById("valuation-result");
+
             resultDiv.innerHTML = `
-                <h3>Your ${valuation.year} ${valuation.make} ${valuation.model} is worth:</h3>
+                <h3>Your ${valuation.year} ${valuation.make} ${
+              valuation.model
+            } is worth:</h3>
                 <div class="valuation-price">${valuation.estimated.toLocaleString()}</div>
                 <div class="valuation-range">Estimated range: ${valuation.min.toLocaleString()} - ${valuation.max.toLocaleString()}</div>
                 <div class="valuation-actions">
-                    <button onclick="getInstantOffer(${valuation.estimated})">Get Instant Offer</button>
+                    <button onclick="getInstantOffer(${
+                      valuation.estimated
+                    })">Get Instant Offer</button>
                     <button onclick="createListing()">Create Listing</button>
                     <button onclick="scheduleInspection()">Book Inspection</button>
                 </div>
             `;
-        }
+          }
 
-        // Start instant offer process
-        function startInstantOffer() {
-            alert('🚗 Instant Cash Offer\n\nGreat choice! Our instant cash offer service provides:\n\n✅ Guaranteed sale within 24 hours\n✅ No fees or commissions\n✅ Free vehicle collection\n✅ Instant payment on acceptance\n\nTo continue, please complete the valuation form above, then click "Get Instant Offer" from your results.');
-            document.querySelector('.valuation-form').scrollIntoView({ behavior: 'smooth' });
-        }
+          // Start instant offer process
+          function startInstantOffer() {
+            alert(
+              '🚗 Instant Cash Offer\n\nGreat choice! Our instant cash offer service provides:\n\n✅ Guaranteed sale within 24 hours\n✅ No fees or commissions\n✅ Free vehicle collection\n✅ Instant payment on acceptance\n\nTo continue, please complete the valuation form above, then click "Get Instant Offer" from your results.'
+            );
+            document
+              .querySelector(".valuation-form")
+              .scrollIntoView({ behavior: "smooth" });
+          }
 
-        // Get instant offer with price
-        function getInstantOffer(estimatedPrice) {
+          // Get instant offer with price
+          function getInstantOffer(estimatedPrice) {
             const offerPrice = Math.round(estimatedPrice * 0.9); // 10% below estimate for instant offer
-            
-            if (confirm(`🎯 Instant Cash Offer: ${offerPrice.toLocaleString()}\n\nWe're offering ${offerPrice.toLocaleString()} for your car with:\n\n✅ Guaranteed acceptance\n✅ Payment within 24 hours\n✅ Free collection from your location\n✅ All paperwork handled\n\nWould you like to proceed with this offer?`)) {
-                alert('📋 Excellent! To complete your instant cash offer:\n\n1. We\'ll contact you within 2 hours\n2. Schedule a quick vehicle inspection\n3. Confirm final offer\n4. Complete sale and get paid\n\nYou should receive a call from our team shortly. Thank you for choosing CarsAds!');
+
+            if (
+              confirm(
+                `🎯 Instant Cash Offer: ${offerPrice.toLocaleString()}\n\nWe're offering ${offerPrice.toLocaleString()} for your car with:\n\n✅ Guaranteed acceptance\n✅ Payment within 24 hours\n✅ Free collection from your location\n✅ All paperwork handled\n\nWould you like to proceed with this offer?`
+              )
+            ) {
+              alert(
+                "📋 Excellent! To complete your instant cash offer:\n\n1. We'll contact you within 2 hours\n2. Schedule a quick vehicle inspection\n3. Confirm final offer\n4. Complete sale and get paid\n\nYou should receive a call from our team shortly. Thank you for choosing CarsAds!"
+              );
             }
-        }
+          }
 
-        // Create private listing
-        function createListing() {
-            alert('📝 Private Sale Listing\n\nCreate a private sale listing to reach thousands of buyers:\n\n✅ Professional listing creation\n✅ High-quality photo tips\n✅ Price optimization guidance\n✅ Buyer screening\n✅ Secure messaging system\n✅ Sale completion support\n\nListings are free for the first 30 days!\n\nRedirecting to listing creation...');
-        }
+          // Create private listing
+          function createListing() {
+            alert(
+              "📝 Private Sale Listing\n\nCreate a private sale listing to reach thousands of buyers:\n\n✅ Professional listing creation\n✅ High-quality photo tips\n✅ Price optimization guidance\n✅ Buyer screening\n✅ Secure messaging system\n✅ Sale completion support\n\nListings are free for the first 30 days!\n\nRedirecting to listing creation..."
+            );
+          }
 
-        // Trade-in process
-        function tradeIn() {
-            alert('🔄 Trade-In Service\n\nTrade your current car towards a new purchase:\n\n✅ Instant trade-in valuation\n✅ Apply value to new car purchase\n✅ Simplified paperwork\n✅ No separate sale required\n✅ Tax benefits on trade difference\n\nConnect with our dealer network to explore trade-in options...');
-        }
+          // Trade-in process
+          function tradeIn() {
+            alert(
+              "🔄 Trade-In Service\n\nTrade your current car towards a new purchase:\n\n✅ Instant trade-in valuation\n✅ Apply value to new car purchase\n✅ Simplified paperwork\n✅ No separate sale required\n✅ Tax benefits on trade difference\n\nConnect with our dealer network to explore trade-in options..."
+            );
+          }
 
-        // Schedule inspection
-        function scheduleInspection() {
-            alert('🔍 Professional Vehicle Inspection\n\nBoost your sale price with a professional inspection:\n\n✅ Certified mechanical inspection\n✅ Detailed condition report\n✅ Increases buyer confidence\n✅ Typically adds 5-10% to sale price\n✅ $199 - Fully refundable if car doesn\'t sell\n\nWould you like to schedule an inspection?');
-        }
+          // Schedule inspection
+          function scheduleInspection() {
+            alert(
+              "🔍 Professional Vehicle Inspection\n\nBoost your sale price with a professional inspection:\n\n✅ Certified mechanical inspection\n✅ Detailed condition report\n✅ Increases buyer confidence\n✅ Typically adds 5-10% to sale price\n✅ $199 - Fully refundable if car doesn't sell\n\nWould you like to schedule an inspection?"
+            );
+          }
 
-        // Add dynamic model suggestions based on make
-        document.getElementById('val-make').addEventListener('change', function() {
-            const modelInput = document.getElementById('val-model');
-            const selectedMake = this.value.toLowerCase();
-            
-            // Clear current value
-            modelInput.value = '';
-            
-            // Add placeholder based on make
-            const suggestions = {
-                toyota: 'e.g. Camry, Corolla, RAV4, Hilux',
-                mazda: 'e.g. CX-5, Mazda3, CX-3, CX-9',
-                ford: 'e.g. Ranger, Focus, Mustang, Territory',
-                honda: 'e.g. Civic, Accord, CR-V, HR-V',
-                nissan: 'e.g. X-Trail, Qashqai, Navara, Micra',
-                bmw: 'e.g. 320i, X3, 118i, X5',
-                mercedes: 'e.g. C300, GLC, A200, E300',
-                audi: 'e.g. A3, Q3, A4, Q5',
-                volkswagen: 'e.g. Golf, Tiguan, Passat, Polo',
-                hyundai: 'e.g. i30, Tucson, Elantra, Santa Fe'
-            };
-            
-            modelInput.placeholder = suggestions[selectedMake] || 'Enter your car model';
-        });
+          // Add dynamic model suggestions based on make
+          document
+            .getElementById("val-make")
+            .addEventListener("change", function () {
+              const modelInput = document.getElementById("val-model");
+              const selectedMake = this.value.toLowerCase();
 
-        // Add form validation and UX improvements
-        document.addEventListener('DOMContentLoaded', function() {
+              // Clear current value
+              modelInput.value = "";
+
+              // Add placeholder based on make
+              const suggestions = {
+                toyota: "e.g. Camry, Corolla, RAV4, Hilux",
+                mazda: "e.g. CX-5, Mazda3, CX-3, CX-9",
+                ford: "e.g. Ranger, Focus, Mustang, Territory",
+                honda: "e.g. Civic, Accord, CR-V, HR-V",
+                nissan: "e.g. X-Trail, Qashqai, Navara, Micra",
+                bmw: "e.g. 320i, X3, 118i, X5",
+                mercedes: "e.g. C300, GLC, A200, E300",
+                audi: "e.g. A3, Q3, A4, Q5",
+                volkswagen: "e.g. Golf, Tiguan, Passat, Polo",
+                hyundai: "e.g. i30, Tucson, Elantra, Santa Fe",
+              };
+
+              modelInput.placeholder =
+                suggestions[selectedMake] || "Enter your car model";
+            });
+
+          // Add form validation and UX improvements
+          document.addEventListener("DOMContentLoaded", function () {
             // Add smooth scrolling to all internal links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
+            document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+              anchor.addEventListener("click", function (e) {
+                e.preventDefault();
+                const target = document.querySelector(
+                  this.getAttribute("href")
+                );
+                if (target) {
+                  target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+                }
+              });
             });
 
             // Add input formatting for kilometres
-            const kmInput = document.getElementById('val-km');
-            kmInput.addEventListener('input', function(e) {
-                // Remove non-digits
-                let value = e.target.value.replace(/\D/g, '');
-                
-                // Add comma separators
-                if (value) {
-                    value = parseInt(value).toLocaleString();
-                    e.target.value = value.replace(/,/g, '');
-                }
+            const kmInput = document.getElementById("val-km");
+            kmInput.addEventListener("input", function (e) {
+              // Remove non-digits
+              let value = e.target.value.replace(/\D/g, "");
+
+              // Add comma separators
+              if (value) {
+                value = parseInt(value).toLocaleString();
+                e.target.value = value.replace(/,/g, "");
+              }
             });
 
             // Add hover effects to category cards
-            document.querySelectorAll('.category-card, .benefit-item').forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-8px) scale(1.02)';
+            document
+              .querySelectorAll(".category-card, .benefit-item")
+              .forEach((card) => {
+                card.addEventListener("mouseenter", function () {
+                  this.style.transform = "translateY(-8px) scale(1.02)";
                 });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
+
+                card.addEventListener("mouseleave", function () {
+                  this.style.transform = "translateY(0) scale(1)";
                 });
-            });
+              });
 
             // Add progress animation to process steps
-            const processSteps = document.querySelectorAll('.process-step');
+            const processSteps = document.querySelectorAll(".process-step");
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                        }, index * 200);
-                    }
-                });
-            });
-
-            processSteps.forEach((step, index) => {
-                step.style.opacity = '0';
-                step.style.transform = 'translateY(30px)';
-                step.style.transition = 'all 0.6s ease';
-                observer.observe(step);
-            });
-
-            // Form validation enhancement
-            const form = document.querySelector('.search-form');
-            const requiredFields = form.querySelectorAll('[required]');
-            
-            requiredFields.forEach(field => {
-                field.addEventListener('blur', function() {
-                    if (!this.value) {
-                        this.style.borderColor = '#dc3545';
-                        this.style.boxShadow = '0 0 0 3px rgba(220,53,69,0.1)';
-                    } else {
-                        this.style.borderColor = '#28a745';
-                        this.style.boxShadow = '0 0 0 3px rgba(40,167,69,0.1)';
-                    }
-                });
-                
-                field.addEventListener('focus', function() {
-                    this.style.borderColor = '#2a5298';
-                    this.style.boxShadow = '0 0 0 3px rgba(42,82,152,0.1)';
-                });
-            });
-
-            // Add typing animation for testimonials
-            const testimonials = document.querySelectorAll('.testimonial-text');
-            testimonials.forEach(testimonial => {
-                const originalText = testimonial.textContent;
-                testimonial.textContent = '';
-                
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            let index = 0;
-                            const typeWriter = setInterval(() => {
-                                testimonial.textContent = originalText.substring(0, index + 1);
-                                index++;
-                                if (index === originalText.length) {
-                                    clearInterval(typeWriter);
-                                }
-                            }, 30);
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                });
-                
-                observer.observe(testimonial);
-            });
-        });
-
-        // Add success tracking
-        function trackEvent(eventName, details) {
-            console.log(`Event: ${eventName}`, details);
-            // In a real application, this would send data to analytics
-        }
-
-        // Track form submissions
-        document.querySelector('.search-form').addEventListener('submit', function() {
-            trackEvent('valuation_requested', {
-                make: document.getElementById('val-make').value,
-                year: document.getElementById('val-year').value
-            });
-        });
-
-        // Track button clicks
-        document.addEventListener('click', function(e) {
-            if (e.target.matches('.cta-button, .cta-button-outline')) {
-                trackEvent('cta_clicked', {
-                    button: e.target.textContent,
-                    section: e.target.closest('.section, .category-card') ? 'selling_options' : 'other'
-                });
-            }
-        });
-    </script>
-</body>
-</html>
-    <div class="hero">
-        <div class="hero-content">
-            <h1>Sell Your Car Fast</h1>
-            <p>Get the best price for your vehicle with Australia's most trusted platform</p>
-        </div>
-    </div>
-
-    <div class="main-content">
-        <!-- Selling Options Section -->
-        <div class="section">
-            <h2>Choose How to Sell</h2>
-            <div class="category-grid">
-                <div class="category-card featured">
-                    <div class="category-icon">⚡</div>
-                    <h3>Instant Cash Offer</h3>
-                    <p>Get an instant valuation and sell immediately. No hassle, no waiting, guaranteed sale within 24 hours.</p>
-                    <button class="cta-button" onclick="startInstantOffer()">Get Instant Offer</button>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">📝</div>
-                    <h3>Private Sale</h3>
-                    <p>List your car and sell to private buyers. Reach thousands of potential buyers across Australia.</p>
-                    <button class="cta-button-outline" onclick="createListing()">Create Listing</button>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🔄</div>
-                    <h3>Trade-In</h3>
-                    <p>Trade your car towards a new purchase. Convenient and hassle-free with our dealer network.</p>
-                    <button class="cta-button-outline" onclick="tradeIn()">Start Trade-In</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Car Valuation Tool -->
-        <div class="section">
-            <h2>Free Car Valuation</h2>
-            <p style="text-align: center; color: #666; margin-bottom: 1rem;">Get an instant estimate of your car's worth</p>
-            <div class="valuation-form">
-                <form class="search-form" onsubmit="getValuation(event)">
-                    <div class="form-group">
-                        <label for="val-make">Make *</label>
-                        <select id="val-make" required>
-                            <option value="">Select Make</option>
-                            <option value="toyota">Toyota</option>
-                            <option value="mazda">Mazda</option>
-                            <option value="ford">Ford</option>
-                            <option value="honda">Honda</option>
-                            <option value="nissan">Nissan</option>
-                            <option value="bmw">BMW</option>
-                            <option value="mercedes">Mercedes-Benz</option>
-                            <option value="audi">Audi</option>
-                            <option value="volkswagen">Volkswagen</option>
-                            <option value="hyundai">Hyundai</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="val-model">Model *</label>
-                        <input type="text" id="val-model" placeholder="e.g. Camry, Corolla" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="val-year">Year *</label>
-                        <select id="val-year" required>
-                            <option value="">Select Year</option>
-                            <option value="2024">2024</option>
-                            <option value="2023">2023</option>
-                            <option value="2022">2022</option>
-                            <option value="2021">2021</option>
-                            <option value="2020">2020</option>
-                            <option value="2019">2019</option>
-                            <option value="2018">2018</option>
-                            <option value="2017">2017</option>
-                            <option value="2016">2016</option>
-                            <option value="2015">2015</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="val-km">Kilometres *</label>
-                        <input type="number" id="val-km" placeholder="e.g. 50000" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="val-condition">Condition *</label>
-                        <select id="val-condition" required>
-                            <option value="">Select Condition</option>
-                            <option value="excellent">Excellent</option>
-                            <option value="very-good">Very Good</option>
-                            <option value="good">Good</option>
-                            <option value="fair">Fair</option>
-                            <option value="poor">Poor</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="search-btn">Get Free Valuation</button>
-                </form>
-                
-                <div id="valuation-result" class="valuation-result" style="display: none;">
-                    <!-- Results will be populated here -->
-                </div>
-            </div>
-        </div>
-
-        <!-- How It Works Section -->
-        <div class="selling-process">
-            <h2 style="text-align: center; margin-bottom: 2rem;">How to Sell Your Car</h2>
-            <div class="process-steps">
-                <div class="process-step">
-                    <div class="step-number">1</div>
-                    <h4>Get Valuation</h4>
-                    <p>Use our free tool to get an instant estimate of your car's value</p>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">2</div>
-                    <h4>Choose Option</h4>
-                    <p>Select instant cash offer, private sale, or trade-in based on your needs</p>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">3</div>
-                    <h4>Upload Details</h4>
-                    <p>Add photos and details about your car to attract buyers</p>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">4</div>
-                    <h4>Get Offers</h4>
-                    <p>Receive offers from buyers or our instant cash service</p>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">5</div>
-                    <h4>Complete Sale</h4>
-                    <p>Finalize the sale with secure payment and transfer</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Benefits Section -->
-        <div class="section">
-            <h2>Why Sell With CarsAds?</h2>
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <div class="benefit-icon">💰</div>
-                    <h4>Best Prices</h4>
-                    <p>Our platform ensures you get the maximum value for your vehicle with competitive market pricing and instant offers.</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">⚡</div>
-                    <h4>Fast Sales</h4>
-                    <p>Most cars sell within 7 days of listing. Our instant cash offer provides immediate sale options.</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">🛡️</div>
-                    <h4>Secure Transactions</h4>
-                    <p>Safe and secure payment processing with fraud protection and verified buyers only.</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">📞</div>
-                    <h4>Expert Support</h4>
-                    <p>Dedicated support team to help throughout the selling process, from listing to final sale.</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">📈</div>
-                    <h4>Maximum Exposure</h4>
-                    <p>Your car is seen by thousands of potential buyers across Australia through our network.</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">🔍</div>
-                    <h4>Free Inspections</h4>
-                    <p>Professional vehicle inspections available to boost buyer confidence and sale price.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Customer Testimonials -->
-        <div class="testimonials">
-            <h2 style="text-align: center; color: #333;">What Our Sellers Say</h2>
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
-                    <div class="testimonial-text">
-                        "Sold my Toyota Camry in just 3 days! The instant valuation was spot on and the whole process was incredibly smooth."
-                    </div>
-                    <div class="testimonial-author">Sarah M., Sydney</div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
-                    <div class="testimonial-text">
-                        "The instant cash offer saved me so much time. No dealing with timewasters, just a quick sale at a fair price."
-                    </div>
-                    <div class="testimonial-author">Michael K., Melbourne</div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
-                    <div class="testimonial-text">
-                        "Great support team helped me through every step. Got $3,000 more than I expected for my BMW!"
-                    </div>
-                    <div class="testimonial-author">Lisa R., Brisbane</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Sell Your Car</h3>
-                <ul>
-                    <li><a href="#">Instant Cash Offer</a></li>
-                    <li><a href="#">Private Sale</a></li>
-                    <li><a href="#">Trade-In Value</a></li>
-                    <li><a href="#">Car Valuation</a></li>
-                    <li><a href="#">Selling Tips</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Support</h3>
-                <ul>
-                    <li><a href="#">How to Sell</a></li>
-                    <li><a href="#">Pricing Guide</a></li>
-                    <li><a href="#">Photo Tips</a></li>
-                    <li><a href="#">Legal Documents</a></li>
-                    <li><a href="#">Safety Tips</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>About CarsAds</h3>
-                <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 CarsAds. All rights reserved. | Australia's trusted car marketplace</p>
-        </div>
-    </footer>
-
-    <script>
-        // Car valuation data (simplified pricing model)
-        const valuationData = {
-            toyota: {
-                camry: { basePrice: 35000, depreciation: 0.15 },
-                corolla: { basePrice: 28000, depreciation: 0.12 },
-                rav4: { basePrice: 42000, depreciation: 0.10 },
-                hilux: { basePrice: 48000, depreciation: 0.08 }
-            },
-            mazda: {
-                cx5: { basePrice: 45000, depreciation: 0.14 },
-                '3': { basePrice: 32000, depreciation: 0.13 },
-                cx3: { basePrice: 35000, depreciation: 0.15 }
-            },
-            ford: {
-                ranger: { basePrice: 52000, depreciation: 0.12 },
-                focus: { basePrice: 28000, depreciation: 0.16 },
-                territory: { basePrice: 38000, depreciation: 0.18 }
-            },
-            bmw: {
-                '320i': { basePrice: 65000, depreciation: 0.20 },
-                'x3': { basePrice: 75000, depreciation: 0.18 },
-                '118i': { basePrice: 45000, depreciation: 0.22 }
-            },
-            mercedes: {
-                'c300': { basePrice: 78000, depreciation: 0.22 },
-                'glc': { basePrice: 82000, depreciation: 0.20 },
-                'a200': { basePrice: 48000, depreciation: 0.24 }
-            }
-        };
-
-        // Condition multipliers
-        const conditionMultipliers = {
-            excellent: 1.0,
-            'very-good': 0.92,
-            good: 0.85,
-            fair: 0.75,
-            poor: 0.60
-        };
-
-        // Get car valuation
-        function getValuation(event) {
-            event.preventDefault();
-            
-            const form = event.target;
-            const submitBtn = form.querySelector('.search-btn');
-            const resultDiv = document.getElementById('valuation-result');
-            
-            // Show loading state
-            submitBtn.textContent = 'Calculating...';
-            submitBtn.classList.add('loading');
-            
-            // Get form data
-            const make = document.getElementById('val-make').value.toLowerCase();
-            const model = document.getElementById('val-model').value.toLowerCase().replace(/\s+/g, '');
-            const year = parseInt(document.getElementById('val-year').value);
-            const km = parseInt(document.getElementById('val-km').value);
-            const condition = document.getElementById('val-condition').value;
-            
-            // Simulate API call delay
-            setTimeout(() => {
-                const valuation = calculateCarValue(make, model, year, km, condition);
-                displayValuation(valuation);
-                
-                // Reset button
-                submitBtn.textContent = 'Get Free Valuation';
-                submitBtn.classList.remove('loading');
-                
-                // Show result with animation
-                resultDiv.style.display = 'block';
-                resultDiv.classList.add('fade-in');
-                
-                // Scroll to result
-                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 2000);
-        }
-
-        // Calculate car value based on inputs
-        function calculateCarValue(make, model, year, km, condition) {
-            let basePrice = 25000; // Default base price
-            let depreciation = 0.15; // Default depreciation
-            
-            // Try to find specific model data
-            if (valuationData[make] && valuationData[make][model]) {
-                basePrice = valuationData[make][make][model].basePrice;
-                depreciation = valuationData[make][model].depreciation;
-            } else if (valuationData[make]) {
-                // Use average for the make
-                const models = Object.values(valuationData[make]);
-                basePrice = models.reduce((sum, m) => sum + m.basePrice, 0) / models.length;
-                depreciation = models.reduce((sum, m) => sum + m.depreciation, 0) / models.length;
-            }
-            
-            // Calculate age depreciation
-            const currentYear = 2025;
-            const age = currentYear - year;
-            const ageDepreciation = Math.pow(1 - depreciation, age);
-            
-            // Apply km depreciation (more km = lower value)
-            const kmFactor = Math.max(0.5, 1 - (km / 200000) * 0.3);
-            
-            // Apply condition multiplier
-            const conditionFactor = conditionMultipliers[condition] || 0.85;
-            
-            // Calculate final price
-            const estimatedValue = Math.round(basePrice * ageDepreciation * kmFactor * conditionFactor);
-            const minValue = Math.round(estimatedValue * 0.85);
-            const maxValue = Math.round(estimatedValue * 1.15);
-            
-            return {
-                estimated: estimatedValue,
-                min: minValue,
-                max: maxValue,
-                make: make.charAt(0).toUpperCase() + make.slice(1),
-                model: model.charAt(0).toUpperCase() + model.slice(1),
-                year: year
-            };
-        }
-
-        // Display valuation results
-        function displayValuation(valuation) {
-            const resultDiv = document.getElementById('valuation-result');
-            
-            resultDiv.innerHTML = `
-                <h3>Your ${valuation.year} ${valuation.make} ${valuation.model} is worth:</h3>
-                <div class="valuation-price">${valuation.estimated.toLocaleString()}</div>
-                <div class="valuation-range">Estimated range: ${valuation.min.toLocaleString()} - ${valuation.max.toLocaleString()}</div>
-                <div class="valuation-actions">
-                    <button onclick="getInstantOffer(${valuation.estimated})">Get Instant Offer</button>
-                    <button onclick="createListing()">Create Listing</button>
-                    <button onclick="scheduleInspection()">Book Inspection</button>
-                </div>
-            `;
-        }
-
-        // Start instant offer process
-        function startInstantOffer() {
-            alert('🚗 Instant Cash Offer\n\nGreat choice! Our instant cash offer service provides:\n\n✅ Guaranteed sale within 24 hours\n✅ No fees or commissions\n✅ Free vehicle collection\n✅ Instant payment on acceptance\n\nTo continue, please complete the valuation form above, then click "Get Instant Offer" from your results.');
-            document.querySelector('.valuation-form').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Get instant offer with price
-        function getInstantOffer(estimatedPrice) {
-            const offerPrice = Math.round(estimatedPrice * 0.9); // 10% below estimate for instant offer
-            
-            if (confirm(`🎯 Instant Cash Offer: ${offerPrice.toLocaleString()}\n\nWe're offering ${offerPrice.toLocaleString()} for your car with:\n\n✅ Guaranteed acceptance\n✅ Payment within 24 hours\n✅ Free collection from your location\n✅ All paperwork handled\n\nWould you like to proceed with this offer?`)) {
-                alert('📋 Excellent! To complete your instant cash offer:\n\n1. We\'ll contact you within 2 hours\n2. Schedule a quick vehicle inspection\n3. Confirm final offer\n4. Complete sale and get paid\n\nYou should receive a call from our team shortly. Thank you for choosing CarsAds!');
-            }
-        }
-
-        // Create private listing
-        function createListing() {
-            alert('📝 Private Sale Listing\n\nCreate a private sale listing to reach thousands of buyers:\n\n✅ Professional listing creation\n✅ High-quality photo tips\n✅ Price optimization guidance\n✅ Buyer screening\n✅ Secure messaging system\n✅ Sale completion support\n\nListings are free for the first 30 days!\n\nRedirecting to listing creation...');
-        }
-
-        // Trade-in process
-        function tradeIn() {
-            alert('🔄 Trade-In Service\n\nTrade your current car towards a new purchase:\n\n✅ Instant trade-in valuation\n✅ Apply value to new car purchase\n✅ Simplified paperwork\n✅ No separate sale required\n✅ Tax benefits on trade difference\n\nConnect with our dealer network to explore trade-in options...');
-        }
-
-        // Schedule inspection
-        function scheduleInspection() {
-            alert('🔍 Professional Vehicle Inspection\n\nBoost your sale price with a professional inspection:\n\n✅ Certified mechanical inspection\n✅ Detailed condition report\n✅ Increases buyer confidence\n✅ Typically adds 5-10% to sale price\n✅ $199 - Fully refundable if car doesn\'t sell\n\nWould you like to schedule an inspection?');
-        }
-
-        // Add dynamic model suggestions based on make
-        document.getElementById('val-make').addEventListener('change', function() {
-            const modelInput = document.getElementById('val-model');
-            const selectedMake = this.value.toLowerCase();
-            
-            // Clear current value
-            modelInput.value = '';
-            
-            // Add placeholder based on make
-            const suggestions = {
-                toyota: 'e.g. Camry, Corolla, RAV4, Hilux',
-                mazda: 'e.g. CX-5, Mazda3, CX-3, CX-9',
-                ford: 'e.g. Ranger, Focus, Mustang, Territory',
-                honda: 'e.g. Civic, Accord, CR-V, HR-V',
-                nissan: 'e.g. X-Trail, Qashqai, Navara, Micra',
-                bmw: 'e.g. 320i, X3, 118i, X5',
-                mercedes: 'e.g. C300, GLC, A200, E300',
-                audi: 'e.g. A3, Q3, A4, Q5',
-                volkswagen: 'e.g. Golf, Tiguan, Passat, Polo',
-                hyundai: 'e.g. i30, Tucson, Elantra, Santa Fe'
-            };
-            
-            modelInput.placeholder = suggestions[selectedMake] || 'Enter your car model';
-        });
-
-        // Add form validation and UX improvements
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add smooth scrolling to all internal links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-
-            // Add input formatting for kilometres
-            const kmInput = document.getElementById('val-km');
-            kmInput.addEventListener('input', function(e) {
-                // Remove non-digits
-                let value = e.target.value.replace(/\D/g, '');
-                
-                // Add comma separators
-                if (value) {
-                    value = parseInt(value).toLocaleString();
-                    e.target.value = value.replace(/,/g, '');
+              entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                  setTimeout(() => {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                  }, index * 200);
                 }
-            });
-
-            // Add hover effects to category cards
-            document.querySelectorAll('.category-card, .benefit-item').forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-8px) scale(1.02)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
-                });
-            });
-
-            // Add progress animation to process steps
-            const processSteps = document.querySelectorAll('.process-step');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                        }, index * 200);
-                    }
-                });
+              });
             });
 
             processSteps.forEach((step, index) => {
-                step.style.opacity = '0';
-                step.style.transform = 'translateY(30px)';
-                step.style.transition = 'all 0.6s ease';
-                observer.observe(step);
+              step.style.opacity = "0";
+              step.style.transform = "translateY(30px)";
+              step.style.transition = "all 0.6s ease";
+              observer.observe(step);
             });
 
             // Form validation enhancement
-            const form = document.querySelector('.search-form');
-            const requiredFields = form.querySelectorAll('[required]');
-            
-            requiredFields.forEach(field => {
-                field.addEventListener('blur', function() {
-                    if (!this.value) {
-                        this.style.borderColor = '#dc3545';
-                        this.style.boxShadow = '0 0 0 3px rgba(220,53,69,0.1)';
-                    } else {
-                        this.style.borderColor = '#28a745';
-                        this.style.boxShadow = '0 0 0 3px rgba(40,167,69,0.1)';
-                    }
-                });
-                
-                field.addEventListener('focus', function() {
-                    this.style.borderColor = '#2a5298';
-                    this.style.boxShadow = '0 0 0 3px rgba(42,82,152,0.1)';
-                });
+            const form = document.querySelector(".search-form");
+            const requiredFields = form.querySelectorAll("[required]");
+
+            requiredFields.forEach((field) => {
+              field.addEventListener("blur", function () {
+                if (!this.value) {
+                  this.style.borderColor = "#dc3545";
+                  this.style.boxShadow = "0 0 0 3px rgba(220,53,69,0.1)";
+                } else {
+                  this.style.borderColor = "#28a745";
+                  this.style.boxShadow = "0 0 0 3px rgba(40,167,69,0.1)";
+                }
+              });
+
+              field.addEventListener("focus", function () {
+                this.style.borderColor = "#2a5298";
+                this.style.boxShadow = "0 0 0 3px rgba(42,82,152,0.1)";
+              });
             });
 
             // Add typing animation for testimonials
-            const testimonials = document.querySelectorAll('.testimonial-text');
-            testimonials.forEach(testimonial => {
-                const originalText = testimonial.textContent;
-                testimonial.textContent = '';
-                
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            let index = 0;
-                            const typeWriter = setInterval(() => {
-                                testimonial.textContent = originalText.substring(0, index + 1);
-                                index++;
-                                if (index === originalText.length) {
-                                    clearInterval(typeWriter);
-                                }
-                            }, 30);
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                });
-                
-                observer.observe(testimonial);
-            });
-        });
+            const testimonials = document.querySelectorAll(".testimonial-text");
+            testimonials.forEach((testimonial) => {
+              const originalText = testimonial.textContent;
+              testimonial.textContent = "";
 
-        // Add success tracking
-        function trackEvent(eventName, details) {
+              const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                    let index = 0;
+                    const typeWriter = setInterval(() => {
+                      testimonial.textContent = originalText.substring(
+                        0,
+                        index + 1
+                      );
+                      index++;
+                      if (index === originalText.length) {
+                        clearInterval(typeWriter);
+                      }
+                    }, 30);
+                    observer.unobserve(entry.target);
+                  }
+                });
+              });
+
+              observer.observe(testimonial);
+            });
+          });
+
+          // Add success tracking
+          function trackEvent(eventName, details) {
             console.log(`Event: ${eventName}`, details);
             // In a real application, this would send data to analytics
-        }
+          }
 
-        // Track form submissions
-        document.querySelector('.search-form').addEventListener('submit', function() {
-            trackEvent('valuation_requested', {
-                make: document.getElementById('val-make').value,
-                year: document.getElementById('val-year').value
+          // Track form submissions
+          document
+            .querySelector(".search-form")
+            .addEventListener("submit", function () {
+              trackEvent("valuation_requested", {
+                make: document.getElementById("val-make").value,
+                year: document.getElementById("val-year").value,
+              });
             });
-        });
 
-        // Track button clicks
-        document.addEventListener('click', function(e) {
-            if (e.target.matches('.cta-button, .cta-button-outline')) {
-                trackEvent('cta_clicked', {
-                    button: e.target.textContent,
-                    section: e.target.closest('.section, .category-card') ? 'selling_options' : 'other'
-                });
+          // Track button clicks
+          document.addEventListener("click", function (e) {
+            if (e.target.matches(".cta-button, .cta-button-outline")) {
+              trackEvent("cta_clicked", {
+                button: e.target.textContent,
+                section: e.target.closest(".section, .category-card")
+                  ? "selling_options"
+                  : "other",
+              });
             }
-        });
-    </script>
-</body>
-</html>
+          });
+        </script>
+      </body>
+    </html>
