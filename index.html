@@ -1,827 +1,1296 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CarsAds - Find Your Perfect Car</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <header class="header">
-      <nav class="nav">
-        <div class="logo">
-          <a href="index.html" class="logo-link">
-            <img src="images/logo.png" alt="CarsAds Logo" class="logo-img" />
-            <span class="logo">CarsAds</span>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarsAds.online - Buy & Sell Cars</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e293b;
+            --accent-color: #10b981;
+            --success-color: #059669;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --light-color: #f8fafc;
+            --dark-color: #0f172a;
+            --gradient-primary: linear-gradient(135deg, #2563eb, #1d4ed8);
+            --gradient-secondary: linear-gradient(135deg, #10b981, #059669);
+            --gradient-accent: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            --gradient-dark: linear-gradient(135deg, #1e293b, #0f172a);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background: var(--light-color);
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255,255,255,0.95) !important;
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-md);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.75rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--primary-color) !important;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 600;
+            color: var(--secondary-color);
+            transition: all 0.3s ease;
+            position: relative;
+            margin: 0 0.5rem;
+            padding: 0.75rem 1.5rem !important;
+            border-radius: 50px;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: white;
+            background: var(--gradient-primary);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .menu-btn {
+          font-size: 13px;           /* smaller font */
+          padding: 4px 12px;         /* smaller padding */
+          color: #1e73be;            /* example: match logo blue */
+          border: 1px solid #1e73be; /* border in same color */
+          border-radius: 4px;        /* rounded edges */
+          transition: all 0.3s ease;
+          text-decoration: none;
+        }
+
+        .menu-btn:hover {
+          background-color: #1e73be; /* fill with logo color on hover */
+          color: #fff;               /* white text on hover */
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--dark-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        @media (max-width: 767px) {
+          .mobile-toggle {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 1;
+          }
+          .mobile-toggle.hide {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+          }
+        }
+
+        /* Buy Cars Section */
+        #buy {
+            min-height: 100vh;
+            padding: 120px 0 80px;
+        }
+
+        .search-filters {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 3rem;
+            border: 1px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .filter-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .car-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            height: 100%;
+        }
+
+        .car-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary-color);
+        }
+
+        .car-image-container {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+
+        .car-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .car-card:hover .car-image {
+            transform: scale(1.05);
+        }
+
+        .price-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .car-details {
+            padding: 1.5rem;
+        }
+
+        .car-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .car-meta {
+            display: flex;
+            justify-content: between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .feature-badge {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 2px;
+            display: inline-block;
+        }
+
+        .car-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        .btn-custom {
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.85rem;
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            color: white;
+        }
+
+        .btn-outline-custom {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            flex: 1;
+        }
+
+        .btn-outline-custom:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Sell Section */
+        #sell {
+            background: linear-gradient(135deg, #f9fafb 0%, #eef2f7 100%); /* light background */
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+            z-index: 0;
+            }
+
+            #sell::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1200&auto=format&fit=crop&q=60') center/cover no-repeat, /* car bg */
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0L0 0 0 20" fill="none" stroke="rgba(0,0,0,0.04)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>'); /* subtle grid */
+            background-blend-mode: lighten;
+            opacity: 0.15; /* keep very light */
+            z-index: -1;
+            }
+        .sell-form {
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        .form-section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .form-control, .form-select {
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            padding: 14px 18px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            background: white;
+            font-size: 1rem;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-submit {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+            color: white;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: var(--gradient-primary);
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .contact-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+            height: 100%;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.2);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .contact-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .contact-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-subtitle {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .linkedin-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .linkedin-btn:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        /* Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .sell-form {
+                padding: 2rem;
+            }
+
+            .car-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-primary);
+            border-radius: 10px;
+        }
+
+        /* Loading skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar fixed-top bg-light py-1">
+      <div class="container d-flex align-items-center justify-content-between flex-nowrap">
+    
+        <!-- Logo -->
+        <a class="navbar-brand mb-0 p-0" href="#buy">
+          <img src="images/logo.png" alt="CarsAds Logo" style="height:36px;">
+        </a>
+    
+        <!-- Menu -->
+        <ul class="navbar-nav d-flex flex-row mb-0">
+          <li class="nav-item">
+            <a class="nav-link menu-btn" href="#buy">Buy</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link menu-btn" href="#sell">Sell</a>
+          </li>
+        </ul>
+    
+      </div>
+    </nav>
+    
+    <!-- Buy Cars Section -->
+    <section id="buy">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll mobile-toggle">Find Your Perfect Car</h2>
+            
+            <!-- Search Filters -->
+            <div class="search-filters animate-on-scroll">
+                <div class="filter-title">
+                    <i class="fas fa-filter text-primary"></i>
+                    Filter & Search
+                </div>
+                <div class="row g-3">
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <label class="form-label">Make</label>
+                        <select class="form-select" id="filterMake">
+                            <option selected>All Makes</option>
+                            <option>Toyota</option>
+                            <option>Honda</option>
+                            <option>Ford</option>
+                            <option>BMW</option>
+                            <option>Mercedes</option>
+                            <option>Audi</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <label class="form-label">Year</label>
+                        <select class="form-select" id="filterYear">
+                            <option selected>All Years</option>
+                            <option>2024</option>
+                            <option>2023</option>
+                            <option>2022</option>
+                            <option>2021</option>
+                            <option>2020</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <label class="form-label">Price</label>
+                        <select class="form-select" id="filterPrice">
+                            <option selected>All Prices</option>
+                            <option>Under $25,000</option>
+                            <option>$25,000 - $40,000</option>
+                            <option>$40,000 - $60,000</option>
+                            <option>Over $60,000</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <label class="form-label">Condition</label>
+                        <select class="form-select" id="filterCondition">
+                            <option selected>All Conditions</option>
+                            <option>New</option>
+                            <option>Like New</option>
+                            <option>Excellent</option>
+                            <option>Good</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <label class="form-label">&nbsp;</label>
+                        <button class="btn btn-primary-custom btn-custom w-100" onclick="filterCars()">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <label class="form-label">&nbsp;</label>
+                        <button class="btn btn-outline-custom w-100" onclick="clearFilters()">
+                            <i class="fas fa-refresh"></i> Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cars Grid -->
+            <div class="row" id="carsGrid">
+                <!-- Cars will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Sell Car Section -->
+    <section id="sell">
+        <div class="container">
+            <h2 class="section-title text-white animate-on-scroll">Sell Your Car</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="sell-form animate-on-scroll">
+                        <form id="sellCarForm">
+                            <div class="form-section-title">
+                                <i class="fas fa-car me-2"></i>
+                                Vehicle Information
+                            </div>
+                            <div class="row g-4 mb-4">
+                                <div class="col-md-6">
+                                    <label for="carMake" class="form-label">Make *</label>
+                                    <select class="form-select" id="carMake" required>
+                                        <option selected disabled>Select Make</option>
+                                        <option>Toyota</option>
+                                        <option>Honda</option>
+                                        <option>Ford</option>
+                                        <option>BMW</option>
+                                        <option>Mercedes-Benz</option>
+                                        <option>Audi</option>
+                                        <option>Volkswagen</option>
+                                        <option>Nissan</option>
+                                        <option>Hyundai</option>
+                                        <option>Mazda</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="carModel" class="form-label">Model *</label>
+                                    <input type="text" class="form-control" id="carModel" placeholder="e.g. Camry, Civic, Accord" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="carYear" class="form-label">Year *</label>
+                                    <select class="form-select" id="carYear" required>
+                                        <option selected disabled>Select Year</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="carMileage" class="form-label">Mileage (km) *</label>
+                                    <input type="number" class="form-control" id="carMileage" placeholder="e.g. 50000" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="carCondition" class="form-label">Condition *</label>
+                                    <select class="form-select" id="carCondition" required>
+                                        <option selected disabled>Select Condition</option>
+                                        <option>New</option>
+                                        <option>Like New</option>
+                                        <option>Excellent</option>
+                                        <option>Good</option>
+                                        <option>Fair</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-section-title">
+                                <i class="fas fa-dollar-sign me-2"></i>
+                                Pricing & Details
+                            </div>
+                            <div class="row g-4 mb-4">
+                                <div class="col-md-6">
+                                    <label for="carPrice" class="form-label">Asking Price ($) *</label>
+                                    <input type="number" class="form-control" id="carPrice" placeholder="e.g. 25000" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="carTransmission" class="form-label">Transmission</label>
+                                    <select class="form-select" id="carTransmission">
+                                        <option selected>Automatic</option>
+                                        <option>Manual</option>
+                                        <option>CVT</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label for="carDescription" class="form-label">Description</label>
+                                    <textarea class="form-control" id="carDescription" rows="4" placeholder="Describe your car's features, maintenance history, any modifications, etc."></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-section-title">
+                                <i class="fas fa-user me-2"></i>
+                                Contact Information
+                            </div>
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <label for="sellerName" class="form-label">Full Name *</label>
+                                    <input type="text" class="form-control" id="sellerName" placeholder="Your full name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="sellerPhone" class="form-label">Phone Number *</label>
+                                    <input type="tel" class="form-control" id="sellerPhone" placeholder="+1 (555) 123-4567" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="sellerEmail" class="form-label">Email Address *</label>
+                                    <input type="email" class="form-control" id="sellerEmail" placeholder="your.email@example.com" required>
+                                </div>
+                                <div class="col-12 text-center mt-4">
+                                    <button type="submit" class="btn-submit">
+                                        <i class="fas fa-plus-circle me-2"></i>
+                                        List My Car Now
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container text-center">
+        <!-- Logo + Title -->
+        <div class="d-flex align-items-center justify-content-center mb-2">
+          <div class="logo-icon me-2">
+            <i class="fas fa-car"></i>
+          </div>
+          <h5 class="mb-0 fw-bold">CarsAds.online</h5>
+        </div>
+    
+        <!-- LinkedIn button (center under CarsAds.online) -->
+        <div class="mb-3">
+          <a href="https://linkedin.com/company/carsads" target="_blank" class="linkedin-btn">
+            <i class="fab fa-linkedin"></i>
+            Contact Us
           </a>
         </div>
-        <ul class="nav-links">
-          <li><a href="index.html" onclick="showSection('home')">Home</a></li>
-          <li><a href="buy.html" onclick="showSection('buy')">Buy</a></li>
-          <li><a href="sell.html" onclick="showSection('sell')">Sell</a></li>
-        </ul>
-      </nav>
-    </header>
-
-    <main id="main-content">
-      <!-- Home Section -->
-      <section id="home-section">
-        <div class="hero">
-          <div class="hero-content">
-            <h1>Find Your Perfect Car</h1>
-            <p>
-              Australia's premier destination for buying and selling quality
-              vehicles
-            </p>
-
-            <div class="search-container-home">
-              <form class="search-form" onsubmit="performSearch(event)">
-                <div class="form-group">
-                  <label for="make">Make</label>
-                  <select id="make" name="make">
-                    <option value="">All Makes</option>
-                    <option value="toyota">Toyota</option>
-                    <option value="holden">Holden</option>
-                    <option value="ford">Ford</option>
-                    <option value="mazda">Mazda</option>
-                    <option value="nissan">Nissan</option>
-                    <option value="honda">Honda</option>
-                    <option value="bmw">BMW</option>
-                    <option value="mercedes">Mercedes-Benz</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label for="model">Model</label>
-                  <select id="model" name="model">
-                    <option value="">All Models</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label for="price-min">Min Price</label>
-                  <select id="price-min" name="price-min">
-                    <option value="">No Min</option>
-                    <option value="5000">$5,000</option>
-                    <option value="10000">$10,000</option>
-                    <option value="15000">$15,000</option>
-                    <option value="20000">$20,000</option>
-                    <option value="30000">$30,000</option>
-                    <option value="50000">$50,000</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label for="price-max">Max Price</label>
-                  <select id="price-max" name="price-max">
-                    <option value="">No Max</option>
-                    <option value="10000">$10,000</option>
-                    <option value="20000">$20,000</option>
-                    <option value="30000">$30,000</option>
-                    <option value="50000">$50,000</option>
-                    <option value="75000">$75,000</option>
-                    <option value="100000">$100,000</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label for="location">Location</label>
-                  <select id="location" name="location">
-                    <option value="">All Locations</option>
-                    <option value="sydney">Sydney, NSW</option>
-                    <option value="melbourne">Melbourne, VIC</option>
-                    <option value="brisbane">Brisbane, QLD</option>
-                    <option value="perth">Perth, WA</option>
-                    <option value="adelaide">Adelaide, SA</option>
-                    <option value="canberra">Canberra, ACT</option>
-                    <option value="darwin">Darwin, NT</option>
-                    <option value="hobart">Hobart, TAS</option>
-                  </select>
-                </div>
-
-                <button type="submit" class="search-btn">Search Cars</button>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <div class="main-content">
-          <section class="section">
-            <h2>Featured Vehicles</h2>
-            <div class="featured-cars" id="featured-cars">
-              <!-- Cars will be populated by JavaScript -->
-            </div>
-          </section>
-
-          <section class="section">
-            <div class="stats-section">
-              <h2>Why Choose CarsAds?</h2>
-              <div class="stats-grid">
-                <div class="stat">
-                  <div class="stat-number">150K+</div>
-                  <div class="stat-label">Cars for Sale</div>
-                </div>
-                <div class="stat">
-                  <div class="stat-number">50K+</div>
-                  <div class="stat-label">Happy Customers</div>
-                </div>
-                <div class="stat">
-                  <div class="stat-number">2000+</div>
-                  <div class="stat-label">Dealers</div>
-                </div>
-                <div class="stat">
-                  <div class="stat-number">15</div>
-                  <div class="stat-label">Years Experience</div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-      </section>
-
-      <!-- Search Results Section -->
-      <section id="search-section" style="display: none">
-        <div class="main-content">
-          <div class="filter-bar">
-            <div class="filter-item">
-              <strong>Filters:</strong>
-            </div>
-            <div class="filter-item">
-              <label>Body Type:</label>
-              <select>
-                <option>All</option>
-                <option>Sedan</option>
-                <option>SUV</option>
-                <option>Hatchback</option>
-                <option>Ute</option>
-              </select>
-            </div>
-            <div class="filter-item">
-              <label>Fuel Type:</label>
-              <select>
-                <option>All</option>
-                <option>Petrol</option>
-                <option>Diesel</option>
-                <option>Hybrid</option>
-                <option>Electric</option>
-              </select>
-            </div>
-            <div class="filter-item">
-              <label>Transmission:</label>
-              <select>
-                <option>All</option>
-                <option>Automatic</option>
-                <option>Manual</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="results-header">
-            <div><strong id="results-count">0</strong> cars found</div>
-            <select class="sort-select" onchange="sortResults(this.value)">
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-              <option value="year-new">Year: Newest First</option>
-              <option value="year-old">Year: Oldest First</option>
-              <option value="km-low">Kilometres: Low to High</option>
-            </select>
-          </div>
-
-          <div class="featured-cars" id="search-results">
-            <!-- Search results will be populated here -->
-          </div>
-        </div>
-      </section>
-
-      <!-- Buy Section -->
-      <section id="buy-section" style="display: none">
-        <div class="hero">
-          <div class="hero-content">
-            <h1>Buy Your Perfect Car</h1>
-            <p>
-              Browse thousands of quality vehicles from trusted dealers and
-              private sellers
-            </p>
-          </div>
-        </div>
-
-        <div class="main-content">
-          <div class="section">
-            <div class="buy-categories">
-              <div class="category-grid">
-                <div class="category-card" onclick="filterByType('new')">
-                  <div class="category-icon">🚗</div>
-                  <h3>New Cars</h3>
-                  <p>Latest models with full warranty</p>
-                  <div class="category-count">2,500+ available</div>
-                </div>
-                <div class="category-card" onclick="filterByType('used')">
-                  <div class="category-icon">🔧</div>
-                  <h3>Used Cars</h3>
-                  <p>Quality pre-owned vehicles</p>
-                  <div class="category-count">45,000+ available</div>
-                </div>
-                <div class="category-card" onclick="filterByType('dealer')">
-                  <div class="category-icon">🏢</div>
-                  <h3>Dealer Cars</h3>
-                  <p>Professional dealer network</p>
-                  <div class="category-count">25,000+ available</div>
-                </div>
-                <div class="category-card" onclick="filterByType('private')">
-                  <div class="category-icon">👤</div>
-                  <h3>Private Sales</h3>
-                  <p>Direct from owners</p>
-                  <div class="category-count">20,000+ available</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="section">
-            <h2>Popular Searches</h2>
-            <div class="popular-searches">
-              <button class="search-tag" onclick="quickSearch('toyota camry')">
-                Toyota Camry
-              </button>
-              <button class="search-tag" onclick="quickSearch('mazda cx5')">
-                Mazda CX-5
-              </button>
-              <button class="search-tag" onclick="quickSearch('bmw 3 series')">
-                BMW 3 Series
-              </button>
-              <button class="search-tag" onclick="quickSearch('ford ranger')">
-                Ford Ranger
-              </button>
-              <button class="search-tag" onclick="quickSearch('honda civic')">
-                Honda Civic
-              </button>
-              <button
-                class="search-tag"
-                onclick="quickSearch('suv under 30000')"
-              >
-                SUV Under $30k
-              </button>
-              <button class="search-tag" onclick="quickSearch('electric cars')">
-                Electric Cars
-              </button>
-              <button class="search-tag" onclick="quickSearch('family cars')">
-                Family Cars
-              </button>
-            </div>
-          </div>
-
-          <div class="section">
-            <h2>Browse by Make</h2>
-            <div class="make-grid">
-              <div class="make-card" onclick="searchByMake('toyota')">
-                <div class="make-logo">T</div>
-                <div class="make-name">Toyota</div>
-                <div class="make-count">8,500 cars</div>
-              </div>
-              <div class="make-card" onclick="searchByMake('mazda')">
-                <div class="make-logo">M</div>
-                <div class="make-name">Mazda</div>
-                <div class="make-count">4,200 cars</div>
-              </div>
-              <div class="make-card" onclick="searchByMake('ford')">
-                <div class="make-logo">F</div>
-                <div class="make-name">Ford</div>
-                <div class="make-count">3,800 cars</div>
-              </div>
-              <div class="make-card" onclick="searchByMake('bmw')">
-                <div class="make-logo">B</div>
-                <div class="make-name">BMW</div>
-                <div class="make-count">2,100 cars</div>
-              </div>
-              <div class="make-card" onclick="searchByMake('mercedes')">
-                <div class="make-logo">MB</div>
-                <div class="make-name">Mercedes-Benz</div>
-                <div class="make-count">1,900 cars</div>
-              </div>
-              <div class="make-card" onclick="searchByMake('honda')">
-                <div class="make-logo">H</div>
-                <div class="make-name">Honda</div>
-                <div class="make-count">3,500 cars</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Sell Section -->
-      <section id="sell-section" style="display: none">
-        <div class="hero">
-          <div class="hero-content">
-            <h1>Sell Your Car Fast</h1>
-            <p>
-              Get the best price for your vehicle with Australia's most trusted
-              platform
-            </p>
-          </div>
-        </div>
-
-        <div class="main-content">
-          <div class="section">
-            <div class="sell-options">
-              <div class="category-grid">
-                <div class="category-card featured">
-                  <div class="category-icon">⚡</div>
-                  <h3>Instant Cash Offer</h3>
-                  <p>Get an instant valuation and sell immediately</p>
-                  <button class="cta-button" onclick="startValuation()">
-                    Get Instant Offer
-                  </button>
-                </div>
-                <div class="category-card">
-                  <div class="category-icon">📝</div>
-                  <h3>Private Sale</h3>
-                  <p>List your car and sell to private buyers</p>
-                  <button class="cta-button-outline" onclick="createListing()">
-                    Create Listing
-                  </button>
-                </div>
-                <div class="category-card">
-                  <div class="category-icon">🔄</div>
-                  <h3>Trade-In</h3>
-                  <p>Trade your car towards a new purchase</p>
-                  <button class="cta-button-outline" onclick="tradeIn()">
-                    Start Trade-In
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="section">
-            <h2>Car Valuation Tool</h2>
-            <div class="valuation-form">
-              <form class="search-form" onsubmit="getValuation(event)">
-                <div class="form-group">
-                  <label for="val-make">Make</label>
-                  <select id="val-make" required>
-                    <option value="">Select Make</option>
-                    <option value="toyota">Toyota</option>
-                    <option value="mazda">Mazda</option>
-                    <option value="ford">Ford</option>
-                    <option value="bmw">BMW</option>
-                    <option value="honda">Honda</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="val-model">Model</label>
-                  <input
-                    type="text"
-                    id="val-model"
-                    placeholder="e.g. Camry"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="val-year">Year</label>
-                  <select id="val-year" required>
-                    <option value="">Select Year</option>
-                    <option value="2023">2023</option>
-                    <option value="2022">2022</option>
-                    <option value="2021">2021</option>
-                    <option value="2020">2020</option>
-                    <option value="2019">2019</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="val-km">Kilometres</label>
-                  <input
-                    type="number"
-                    id="val-km"
-                    placeholder="e.g. 50000"
-                    required
-                  />
-                </div>
-                <button type="submit" class="search-btn">
-                  Get Free Valuation
-                </button>
-              </form>
-            </div>
-          </div>
-
-          <div class="section">
-            <h2>Why Sell With CarsAds?</h2>
-            <div class="benefits-grid">
-              <div class="benefit-item">
-                <div class="benefit-icon">💰</div>
-                <h4>Best Prices</h4>
-                <p>
-                  Our platform ensures you get the maximum value for your
-                  vehicle
-                </p>
-              </div>
-              <div class="benefit-item">
-                <div class="benefit-icon">⚡</div>
-                <h4>Fast Sales</h4>
-                <p>Most cars sell within 7 days of listing</p>
-              </div>
-              <div class="benefit-item">
-                <div class="benefit-icon">🛡️</div>
-                <h4>Secure Transactions</h4>
-                <p>Safe and secure payment processing</p>
-              </div>
-              <div class="benefit-item">
-                <div class="benefit-icon">📞</div>
-                <h4>Expert Support</h4>
-                <p>Dedicated support team to help throughout the process</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Finance Section -->
-      <section id="finance-section" style="display: none">
-        <div class="hero">
-          <div class="hero-content">
-            <h1>Car Finance Made Easy</h1>
-            <p>
-              Compare rates from leading lenders and get pre-approved in minutes
-            </p>
-          </div>
-        </div>
-
-        <div class="main-content">
-          <div class="section">
-            <div class="finance-calculator">
-              <h2>Loan Calculator</h2>
-              <div class="calculator-form">
-                <form class="search-form" onsubmit="calculateLoan(event)">
-                  <div class="form-group">
-                    <label for="loan-amount">Loan Amount</label>
-                    <input
-                      type="number"
-                      id="loan-amount"
-                      placeholder="$30,000"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="loan-term">Loan Term</label>
-                    <select id="loan-term" required>
-                      <option value="">Select Term</option>
-                      <option value="2">2 years</option>
-                      <option value="3">3 years</option>
-                      <option value="4">4 years</option>
-                      <option value="5">5 years</option>
-                      <option value="7">7 years</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="interest-rate">Interest Rate (%)</label>
-                    <input
-                      type="number"
-                      id="interest-rate"
-                      placeholder="6.5"
-                      step="0.1"
-                      required
-                    />
-                  </div>
-                  <button type="submit" class="search-btn">
-                    Calculate Payments
-                  </button>
-                </form>
-                <div
-                  id="calculation-result"
-                  class="calculation-result"
-                  style="display: none"
-                >
-                  <h3>Your Monthly Payment</h3>
-                  <div class="payment-amount" id="monthly-payment">$0</div>
-                  <div class="payment-details">
-                    <div class="detail-item">
-                      <span>Total Interest:</span>
-                      <span id="total-interest">$0</span>
-                    </div>
-                    <div class="detail-item">
-                      <span>Total Amount:</span>
-                      <span id="total-amount">$0</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="section">
-            <h2>Finance Options</h2>
-            <div class="finance-options">
-              <div class="category-grid">
-                <div class="category-card">
-                  <div class="category-icon">🏦</div>
-                  <h3>Car Loan</h3>
-                  <p>Traditional car loans with competitive rates</p>
-                  <div class="rate">From 5.99% p.a.</div>
-                </div>
-                <div class="category-card">
-                  <div class="category-icon">💼</div>
-                  <h3>Chattel Mortgage</h3>
-                  <p>Business car finance with tax benefits</p>
-                  <div class="rate">From 6.49% p.a.</div>
-                </div>
-                <div class="category-card">
-                  <div class="category-icon">📋</div>
-                  <h3>Lease</h3>
-                  <p>Flexible leasing options for individuals and businesses</p>
-                  <div class="rate">From 7.99% p.a.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="section">
-            <h2>Our Finance Partners</h2>
-            <div class="partners-grid">
-              <div class="partner-card">
-                <div class="partner-logo">ANZ</div>
-                <div class="partner-rate">From 5.99%</div>
-              </div>
-              <div class="partner-card">
-                <div class="partner-logo">CBA</div>
-                <div class="partner-rate">From 6.49%</div>
-              </div>
-              <div class="partner-card">
-                <div class="partner-logo">NAB</div>
-                <div class="partner-rate">From 6.99%</div>
-              </div>
-              <div class="partner-card">
-                <div class="partner-logo">Westpac</div>
-                <div class="partner-rate">From 7.49%</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- News Section -->
-      <section id="news-section" style="display: none">
-        <div class="hero">
-          <div class="hero-content">
-            <h1>Automotive News & Reviews</h1>
-            <p>
-              Stay updated with the latest car news, reviews, and industry
-              insights
-            </p>
-          </div>
-        </div>
-
-        <div class="main-content">
-          <div class="section">
-            <div class="news-categories">
-              <button class="news-filter active" onclick="filterNews('all')">
-                All News
-              </button>
-              <button class="news-filter" onclick="filterNews('reviews')">
-                Car Reviews
-              </button>
-              <button class="news-filter" onclick="filterNews('industry')">
-                Industry News
-              </button>
-              <button class="news-filter" onclick="filterNews('launches')">
-                New Launches
-              </button>
-              <button class="news-filter" onclick="filterNews('tips')">
-                Buying Tips
-              </button>
-            </div>
-          </div>
-
-          <div class="section">
-            <div class="news-grid" id="news-articles">
-              <!-- News articles will be populated by JavaScript -->
-            </div>
-          </div>
-
-          <div class="section">
-            <h2>Latest Car Reviews</h2>
-            <div class="review-grid">
-              <div class="review-card">
-                <div class="review-image">2024 Toyota RAV4</div>
-                <div class="review-content">
-                  <h4>2024 Toyota RAV4 Review</h4>
-                  <div class="review-rating">⭐⭐⭐⭐⭐</div>
-                  <p>
-                    Australia's best-selling SUV gets even better with updated
-                    features and improved efficiency.
-                  </p>
-                  <div class="review-meta">
-                    <span>By CarsAds Team</span>
-                    <span>2 days ago</span>
-                  </div>
-                </div>
-              </div>
-              <div class="review-card">
-                <div class="review-image">Ford Ranger Raptor</div>
-                <div class="review-content">
-                  <h4>Ford Ranger Raptor Review</h4>
-                  <div class="review-rating">⭐⭐⭐⭐⭐</div>
-                  <p>
-                    The ultimate off-road ute that doesn't compromise on
-                    everyday usability.
-                  </p>
-                  <div class="review-meta">
-                    <span>By CarsAds Team</span>
-                    <span>5 days ago</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Contact Section -->
-      <section id="contact-section" style="display: none">
-        <div class="hero">
-          <div class="hero-content">
-            <h1>Contact CarsAds</h1>
-            <p>We're here to help with all your automotive needs</p>
-          </div>
-        </div>
-
-        <div class="main-content">
-          <div class="section">
-            <div class="contact-grid">
-              <div class="contact-info">
-                <h2>Get In Touch</h2>
-                <div class="contact-methods">
-                  <div class="contact-method">
-                    <div class="contact-icon">📞</div>
-                    <div class="contact-details">
-                      <h4>Phone Support</h4>
-                      <p>1800 CARSADS (1800 227 723)</p>
-                      <p>Mon-Fri: 8am-8pm, Sat-Sun: 9am-5pm</p>
-                    </div>
-                  </div>
-                  <div class="contact-method">
-                    <div class="contact-icon">✉️</div>
-                    <div class="contact-details">
-                      <h4>Email Support</h4>
-                      <p>support@carsads.com.au</p>
-                      <p>We reply within 24 hours</p>
-                    </div>
-                  </div>
-                  <div class="contact-method">
-                    <div class="contact-icon">💬</div>
-                    <div class="contact-details">
-                      <h4>Live Chat</h4>
-                      <p>Available on our website</p>
-                      <p>Mon-Fri: 9am-6pm</p>
-                    </div>
-                  </div>
-                  <div class="contact-method">
-                    <div class="contact-icon">📍</div>
-                    <div class="contact-details">
-                      <h4>Head Office</h4>
-                      <p>Level 10, 123 Collins Street</p>
-                      <p>Melbourne, VIC 3000</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="contact-form-container">
-                <h2>Send Us a Message</h2>
-                <form class="contact-form" onsubmit="sendMessage(event)">
-                  <div class="form-row">
-                    <div class="form-group">
-                      <label for="contact-name">Name *</label>
-                      <input type="text" id="contact-name" required />
-                    </div>
-                    <div class="form-group">
-                      <label for="contact-email">Email *</label>
-                      <input type="email" id="contact-email" required />
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="form-group">
-                      <label for="contact-phone">Phone</label>
-                      <input type="tel" id="contact-phone" />
-                    </div>
-                    <div class="form-group">
-                      <label for="contact-subject">Subject</label>
-                      <select id="contact-subject" required>
-                        <option value="">Select Subject</option>
-                        <option value="buying">Buying a Car</option>
-                        <option value="selling">Selling a Car</option>
-                        <option value="other">Other</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="contact-message">Message *</label>
-                    <textarea id="contact-message" rows="6" required></textarea>
-                  </div>
-                  <button type="submit" class="search-btn">Send Message</button>
-                </form>
-              </div>
-            </div>
-          </div>
-
-          <div class="section">
-            <h2>Frequently Asked Questions</h2>
-            <div class="faq-container">
-              <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">
-                  <h4>How do I list my car for sale?</h4>
-                  <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                  <p>
-                    You can list your car by clicking "Sell" in the main menu,
-                    then choosing "Create Listing". Fill in your car details,
-                    add photos, and set your price. Your listing will be live
-                    within minutes.
-                  </p>
-                </div>
-              </div>
-              <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">
-                  <h4>Is there a fee to list my car?</h4>
-                  <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                  <p>
-                    Basic listings are free for private sellers. We also offer
-                    premium listing options with enhanced features for better
-                    visibility.
-                  </p>
-                </div>
-              </div>
-              <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">
-                  <h4>How do I get finance for a car?</h4>
-                  <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                  <p>
-                    Visit our Finance section to use our loan calculator and
-                    compare rates from multiple lenders. You can get
-                    pre-approved online in minutes.
-                  </p>
-                </div>
-              </div>
-              <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">
-                  <h4>Can I trade in my current car?</h4>
-                  <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                  <p>
-                    Yes! Many of our dealer partners accept trade-ins. You can
-                    also use our instant valuation tool to get an estimate of
-                    your car's worth.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>Buy</h3>
-          <ul>
-            <li><a href="#">New Cars</a></li>
-            <li><a href="#">Used Cars</a></li>
-            <li><a href="#">Dealer Cars</a></li>
-            <li><a href="#">Private Cars</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h3>Sell</h3>
-          <ul>
-            <li><a href="#">Sell My Car</a></li>
-            <li><a href="#">Car Valuation</a></li>
-            <li><a href="#">Trade In</a></li>
-            <li><a href="#">Instant Offer</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h3>About</h3>
-          <ul>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>
-          &copy; 2025 CarsAds. All rights reserved. | Australia's trusted car
-          marketplace
-        </p>
+    
+        <!-- Copyright -->
+        <p>&copy; 2025 CarsAds.online. All rights reserved. | Your trusted car marketplace</p>
       </div>
     </footer>
+    
 
-    <script src="script.js"></script>
-  </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Car data with real car images
+        const cars = [
+            {
+                id: 1,
+                make: 'Toyota',
+                model: 'Camry Hybrid',
+                year: 2024,
+                price: 34500,
+                mileage: 8500,
+                condition: 'New',
+                transmission: 'Automatic',
+                features: ['Hybrid Engine', 'Toyota Safety Sense', 'Wireless Charging', 'Premium Audio'],
+                image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500&h=300&fit=crop&crop=center'
+            },
+            {
+                id: 2,
+                make: 'Honda',
+                model: 'Civic Type R',
+                year: 2024,
+                price: 43800,
+                mileage: 2100,
+                condition: 'Like New',
+                transmission: 'Manual',
+                features: ['Turbo Engine', 'Sport Mode', 'Brembo Brakes', 'Track Package'],
+                image: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=500&h=300&fit=crop&crop=center'
+            },
+            {
+                id: 3,
+                make: 'BMW',
+                model: 'M3 Competition',
+                year: 2023,
+                price: 72900,
+                mileage: 12000,
+                condition: 'Excellent',
+                transmission: 'Automatic',
+                features: ['M Performance', 'Carbon Fiber Trim', 'Harman Kardon', 'Adaptive Suspension'],
+                image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=500&h=300&fit=crop&crop=center'
+            },
+            {
+                id: 4,
+                make: 'Mercedes',
+                model: 'C300 AMG',
+                year: 2023,
+                price: 48500,
+                mileage: 18500,
+                condition: 'Excellent',
+                transmission: 'Automatic',
+                features: ['AMG Line', '4MATIC AWD', 'MBUX Infotainment', 'Premium Package'],
+                image: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=500&h=300&fit=crop&crop=center'
+            },
+            {
+                id: 5,
+                make: 'Ford',
+                model: 'Mustang GT',
+                year: 2024,
+                price: 38900,
+                mileage: 5200,
+                condition: 'New',
+                transmission: 'Manual',
+                features: ['V8 5.0L Engine', 'Performance Package', 'Recaro Seats', 'Brembo Brakes'],
+                image: 'https://images.unsplash.com/photo-1584345604476-8ec5e12e42dd?w=500&h=300&fit=crop&crop=center'
+            },
+            {
+                id: 6,
+                make: 'Audi',
+                model: 'A4 Quattro',
+                year: 2023,
+                price: 44200,
+                mileage: 15000,
+                condition: 'Excellent',
+                transmission: 'Automatic',
+                features: ['Quattro AWD', 'Virtual Cockpit', 'Premium Plus', 'Bang & Olufsen'],
+                image: 'https://images.unsplash.com/photo-1618056210931-39f730ebbf67?w=500&h=300&fit=crop&crop=center'
+            },
+            {
+                id: 7,
+                make: 'Toyota',
+                model: 'RAV4 Hybrid',
+                year: 2024,
+                price: 35800,
+                mileage: 8900,
+                condition: 'Like New',
+                transmission: 'Automatic',
+                features: ['AWD Hybrid', 'Toyota Safety Sense 2.0', 'Wireless Android Auto', 'Power Liftgate'],
+                image: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=500&h=300&fit=crop&crop=center'
+            },
+            {
+                id: 8,
+                make: 'Honda',
+                model: 'Accord Touring',
+                year: 2023,
+                price: 36400,
+                mileage: 22000,
+                condition: 'Good',
+                transmission: 'Automatic',
+                features: ['Leather Interior', 'Head-Up Display', 'Honda Sensing', 'Wireless Charging'],
+                image: 'https://images.unsplash.com/photo-1605816988069-b11383b50717?w=500&h=300&fit=crop&crop=center'
+            },
+            {
+                id: 9,
+                make: 'Tesla',
+                model: 'Model S Plaid',
+                year: 2024,
+                price: 99990,
+                mileage: 500,
+                condition: 'New',
+                transmission: 'Automatic',
+                features: ['Tri-Motor AWD', 'Autopilot', '0-60 in 1.99s', 'Premium Interior'],
+                image: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=500&h=300&fit=crop&crop=center'
+            }
+        ];
+
+        // Animation on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+        }
+
+        // Populate year dropdown
+        function populateYears() {
+            const yearSelect = document.getElementById('carYear');
+            const currentYear = new Date().getFullYear();
+            
+            for (let year = currentYear; year >= 1990; year--) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                yearSelect.appendChild(option);
+            }
+        }
+
+        // Render cars with images
+        function renderCars(carsToRender = cars) {
+            const carsGrid = document.getElementById('carsGrid');
+            carsGrid.innerHTML = '';
+
+            if (carsToRender.length === 0) {
+                carsGrid.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <div class="animate-on-scroll">
+                            <i class="fas fa-search" style="font-size: 4rem; color: var(--primary-color); margin-bottom: 2rem;"></i>
+                            <h4>No cars found matching your criteria</h4>
+                            <p class="text-muted mb-4">Try adjusting your search filters to see more results</p>
+                            <button class="btn btn-primary-custom btn-custom" onclick="clearFilters()">
+                                <i class="fas fa-refresh"></i> Clear All Filters
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            carsToRender.forEach((car, index) => {
+                const carCard = document.createElement('div');
+                carCard.className = 'col-lg-4 col-md-6 mb-4';
+                
+                const featuresHTML = car.features.slice(0, 3).map(feature => 
+                    `<span class="feature-badge">${feature}</span>`
+                ).join('');
+
+                carCard.innerHTML = `
+                    <div class="car-card animate-on-scroll" style="animation-delay: ${index * 0.1}s;">
+                        <div class="car-image-container">
+                            <img src="${car.image}" alt="${car.year} ${car.make} ${car.model}" class="car-image" 
+                                 onerror="this.src='https://images.unsplash.com/photo-1494976688500-4366a7bc3a06?w=500&h=300&fit=crop&crop=center'">
+                            <div class="price-badge">${car.price.toLocaleString()}</div>
+                        </div>
+                        <div class="car-details">
+                            <h5 class="car-title">${car.year} ${car.make} ${car.model}</h5>
+                            <div class="car-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-tachometer-alt text-warning"></i>
+                                    ${car.mileage.toLocaleString()} km
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-cogs text-info"></i>
+                                    ${car.transmission}
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-star text-success"></i>
+                                    ${car.condition}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                ${featuresHTML}
+                                ${car.features.length > 3 ? `<span class="feature-badge">+${car.features.length - 3} more</span>` : ''}
+                            </div>
+                            <div class="car-actions">
+                                <button class="btn btn-primary-custom btn-custom" onclick="viewCarDetails(${car.id})">
+                                    <i class="fas fa-eye"></i> View Details
+                                </button>
+                                <button class="btn btn-outline-custom" onclick="contactSeller(${car.id})">
+                                    <i class="fas fa-phone"></i> Contact
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                carsGrid.appendChild(carCard);
+            });
+
+            // Re-animate new elements
+            setTimeout(() => {
+                animateOnScroll();
+            }, 100);
+        }
+
+        // Enhanced filter function
+        function filterCars() {
+            const make = document.getElementById('filterMake').value;
+            const year = document.getElementById('filterYear').value;
+            const priceRange = document.getElementById('filterPrice').value;
+            const condition = document.getElementById('filterCondition').value;
+
+            let filteredCars = cars;
+
+            if (make !== 'All Makes') {
+                filteredCars = filteredCars.filter(car => car.make === make);
+            }
+
+            if (year !== 'All Years') {
+                filteredCars = filteredCars.filter(car => car.year.toString() === year);
+            }
+
+            if (condition !== 'All Conditions') {
+                filteredCars = filteredCars.filter(car => car.condition === condition);
+            }
+
+            if (priceRange !== 'All Prices') {
+                filteredCars = filteredCars.filter(car => {
+                    switch(priceRange) {
+                        case 'Under $25,000':
+                            return car.price < 25000;
+                        case '$25,000 - $40,000':
+                            return car.price >= 25000 && car.price <= 40000;
+                        case '$40,000 - $60,000':
+                            return car.price >= 40000 && car.price <= 60000;
+                        case 'Over $60,000':
+                            return car.price > 60000;
+                        default:
+                            return true;
+                    }
+                });
+            }
+
+            renderCars(filteredCars);
+        }
+
+        // Clear all filters
+        function clearFilters() {
+            document.getElementById('filterMake').value = 'All Makes';
+            document.getElementById('filterYear').value = 'All Years';
+            document.getElementById('filterPrice').value = 'All Prices';
+            document.getElementById('filterCondition').value = 'All Conditions';
+            renderCars();
+        }
+
+        // Enhanced view car details modal
+        function viewCarDetails(carId) {
+            const car = cars.find(c => c.id === carId);
+            if (car) {
+                const modal = `
+                    <div class="modal fade" id="carModal" tabindex="-1">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content" style="border-radius: 20px;">
+                                <div class="modal-header" style="background: var(--gradient-primary); color: white; border-radius: 20px 20px 0 0;">
+                                    <h5 class="modal-title fw-bold">
+                                        <i class="fas fa-car me-2"></i>
+                                        ${car.year} ${car.make} ${car.model}
+                                    </h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body p-4">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img src="${car.image}" alt="${car.year} ${car.make} ${car.model}" 
+                                                 class="img-fluid rounded-3 mb-3 w-100" style="height: 300px; object-fit: cover;">
+                                            <div class="row g-2">
+                                                <div class="col-6">
+                                                    <div class="bg-light p-3 rounded-3 text-center">
+                                                        <i class="fas fa-tachometer-alt text-warning fs-4 mb-2"></i>
+                                                        <div class="fw-bold">${car.mileage.toLocaleString()}</div>
+                                                        <small class="text-muted">Kilometers</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="bg-light p-3 rounded-3 text-center">
+                                                        <i class="fas fa-cogs text-info fs-4 mb-2"></i>
+                                                        <div class="fw-bold">${car.transmission}</div>
+                                                        <small class="text-muted">Transmission</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                                <h3 class="text-primary fw-bold">${car.price.toLocaleString()}</h3>
+                                                <span class="badge bg-success fs-6">${car.condition}</span>
+                                            </div>
+                                            
+                                            <div class="mb-4">
+                                                <h6 class="fw-bold mb-3">Vehicle Details</h6>
+                                                <div class="row g-3">
+                                                    <div class="col-6">
+                                                        <strong>Make:</strong> ${car.make}
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <strong>Model:</strong> ${car.model}
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <strong>Year:</strong> ${car.year}
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <strong>Condition:</strong> ${car.condition}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <h6 class="fw-bold mb-3">Features & Equipment</h6>
+                                                <div class="d-flex flex-wrap gap-2">
+                                                    ${car.features.map(f => `<span class="badge" style="background: var(--gradient-secondary); font-size: 0.9rem; padding: 6px 12px;">${f}</span>`).join('')}
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid gap-2">
+                                                <button class="btn btn-success btn-lg fw-bold" onclick="contactSeller(${car.id})" style="border-radius: 12px;">
+                                                    <i class="fas fa-phone me-2"></i> Contact Seller
+                                                </button>
+                                                <button class="btn btn-outline-primary fw-bold" style="border-radius: 12px;">
+                                                    <i class="fas fa-heart me-2"></i> Save to Favorites
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.insertAdjacentHTML('beforeend', modal);
+                const modalElement = new bootstrap.Modal(document.getElementById('carModal'));
+                modalElement.show();
+                
+                document.getElementById('carModal').addEventListener('hidden.bs.modal', function() {
+                    this.remove();
+                });
+            }
+        }
+
+        // Contact seller function
+        function contactSeller(carId) {
+            const car = cars.find(c => c.id === carId);
+            if (car) {
+                const contactModal = `
+                    <div class="modal fade" id="contactModal" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="border-radius: 20px;">
+                                <div class="modal-header" style="background: var(--gradient-secondary); color: white; border-radius: 20px 20px 0 0;">
+                                    <h5 class="modal-title fw-bold">
+                                        <i class="fas fa-phone me-2"></i>
+                                        Contact Seller
+                                    </h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body p-4">
+                                    <div class="text-center mb-4">
+                                        <img src="${car.image}" alt="${car.year} ${car.make} ${car.model}" 
+                                             class="img-fluid rounded-3 mb-3" style="height: 150px; width: 100%; object-fit: cover;">
+                                        <h6 class="fw-bold">${car.year} ${car.make} ${car.model}</h6>
+                                        <p class="text-primary fs-5 fw-bold">${car.price.toLocaleString()}</p>
+                                    </div>
+                                    
+                                    <div class="alert alert-info">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <strong>Seller Contact Information:</strong>
+                                    </div>
+                                    
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                                                <i class="fas fa-phone text-primary fs-4 me-3"></i>
+                                                <div>
+                                                    <strong>Phone:</strong><br>
+                                                    <span class="text-primary">+1 (555) 123-4567</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                                                <i class="fas fa-envelope text-primary fs-4 me-3"></i>
+                                                <div>
+                                                    <strong>Email:</strong><br>
+                                                    <span class="text-primary">seller${carId}@carsads.online</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="alert alert-success mt-3">
+                                        <i class="fas fa-check-circle me-2"></i>
+                                        We'll notify the seller about your interest!
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Send Message</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.insertAdjacentHTML('beforeend', contactModal);
+                const modalElement = new bootstrap.Modal(document.getElementById('contactModal'));
+                modalElement.show();
+                
+                document.getElementById('contactModal').addEventListener('hidden.bs.modal', function() {
+                    this.remove();
+                });
+            }
+        }
+
+        // Form submission with validation
+        document.getElementById('sellCarForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+            submitBtn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                // Success message
+                const successModal = `
+                    <div class="modal fade" id="successModal" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="border-radius: 20px;">
+                                <div class="modal-header" style="background: var(--gradient-secondary); color: white; border-radius: 20px 20px 0 0;">
+                                    <h5 class="modal-title fw-bold">
+                                        <i class="fas fa-check-circle me-2"></i>
+                                        Car Listed Successfully!
+                                    </h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body p-4 text-center">
+                                    <i class="fas fa-car text-success" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+                                    <h4 class="text-success mb-3">Congratulations!</h4>
+                                    <p class="mb-3">Your ${document.getElementById('carYear').value} ${document.getElementById('carMake').value} ${document.getElementById('carModel').value} has been successfully listed for <strong>${parseInt(document.getElementById('carPrice').value).toLocaleString()}</strong>!</p>
+                                    <div class="alert alert-info">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        Our team will review your listing and contact you within 24 hours.
+                                    </div>
+                                    <p class="text-muted">Listing ID: #CA${Math.floor(Math.random() * 10000)}</p>
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Got it!</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.insertAdjacentHTML('beforeend', successModal);
+                const modalElement = new bootstrap.Modal(document.getElementById('successModal'));
+                modalElement.show();
+                
+                document.getElementById('successModal').addEventListener('hidden.bs.modal', function() {
+                    this.remove();
+                });
+
+                // Reset form and button
+                document.getElementById('sellCarForm').reset();
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    // Update active nav link
+                    document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Update active nav on scroll
+        window.addEventListener('scroll', function() {
+            const sections = ['buy', 'sell', 'contact'];
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const element = document.getElementById(section);
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    if (rect.top <= 100 && rect.bottom >= 100) {
+                        current = section;
+                    }
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            populateYears();
+            renderCars();
+            animateOnScroll();
+        });
+    </script>
+</body>
 </html>
